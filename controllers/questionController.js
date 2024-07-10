@@ -14,7 +14,6 @@ exports.createQuestion = async (req, res) => {
 
     const createdQuestion = await question.save();
 
-    // Update user with the new question
     await User.findByIdAndUpdate(req.user._id, {
       $push: { questions: createdQuestion._id },
     });
@@ -70,7 +69,6 @@ exports.createAnswer = async (req, res) => {
 
     const createdAnswer = await answer.save();
 
-    // Update user with the new answer
     await User.findByIdAndUpdate(req.user._id, {
       $push: { answers: createdAnswer._id },
     });

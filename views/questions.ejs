@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 text-gray-900 font-mono">
+<body class="bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 text-gray-900 font-mono">
   <header class="bg-orange-600 text-white px-2 py-2.5 shadow-xl static">
     <div class="container mx-auto">
         <h1 class="text-xl font-bold mb-1">CodeExchange</h1>
@@ -24,12 +25,12 @@
     </div>
   </header>
 
-  <main class="container mx-auto mt-4 mb-10">
+  <main class="container mx-auto mt-8 mb-10">
     <% questions.forEach(question => { %>
-      <div class="bg-white p-6 rounded-lg shadow-lg mb-4">
-        <h1 class="text-2xl font-bold mb-4"><%= question.title %></h1>
-        <p class="text-sm text-gray-500 mb-4">Posted by <%= question.user.username %> on <%= new Date(question.createdAt).toDateString() %></p>
-        <a href="/questions/<%= question._id %>" class="text-blue-500">view more</a>
+      <div class="card px-4 py-3 rounded-2xl mb-4 transition-all duration-400 transform hover:scale-105 hover:bg-white">
+        <h1 class="text-2xl font-bold mb-1"><%= question.title %></h1>
+        <p class="text-sm text-gray-500 mb-2">— by <%= question.user.username %> on <%= new Date(question.createdAt).toDateString() %></p>
+        <a href="/questions/<%= question._id %>" class="text-orange-600 hover:text-red-900">view more</a>
       </div>
     <% }) %>
   </main>
