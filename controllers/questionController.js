@@ -85,3 +85,23 @@ exports.getAnswersByQuestionId = async (req, res) => {
   const answers = await Answer.find({ question: req.params.id }).populate('user', 'username');
   res.json(answers);
 };
+
+exports.deleteQuestion = async (req, res) => {
+  try {
+    const question = await Question.findById(req.params.id);
+    if (!question) {
+      console.error('Question not found');
+      return res.status(404).json({ message: 'Question not found' });
+    }
+    if (question.user.toString() !== req.user._id.toString()) {
+      console.error('Not authorized to delete this question');
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+    await Question.deleteOne({ _id: req.params.id });
+    await User.updateOne({ _id: req.user._id }, { $pull: { questions: req.params.id } });
+    res.json({ message: 'Question deleted' });
+  } catch (error) {
+    console.error('Error deleting question:', error);
+    res.status(500).json({ message: 'Error deleting question' });
+  }
+};
