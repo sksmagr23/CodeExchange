@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="bg-blue-500 text-white p-4">
+    <div class="container mx-auto">
+      <h1 class="text-xl font-bold">CodeExchange</h1>
+      <nav>
+        <a href="/" class="mr-4">Home</a>
+        <a href="/api/auth/logout" class="mr-4">Logout</a>
+        <a href="/questions/ask" class="mr-4">Ask Question</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto mt-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <h1 class="text-2xl font-bold mb-4">Profile</h1>
+      <p class="mb-4">Username: <%= user.username %></p>
+      <p class="mb-4">Email: <%= user.email %></p>
+
+      <h2 class="text-xl font-semibold mb-4">Questions</h2>
+      <% if (user.questions && user.questions.length > 0) { %>
+        <% user.questions.forEach(question => { %>
+          <div class="mb-4">
+            <h3 class="text-lg font-semibold"><a href="/questions/<%= question._id %>"><%= question.title %></a></h3>
+            <p class="text-gray-700"><%= question.description %></p>
+            <p class="text-sm text-gray-500">Posted on <%= question.createdAt.toDateString() %></p>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No questions found.</p>
+      <% } %>
+
+      <h2 class="text-xl font-semibold mb-4">Answers</h2>
+      <% if (user.answers && user.answers.length > 0) { %>
+        <% user.answers.forEach(answer => { %>
+          <div class="mb-4">
+            <p class="text-gray-700"><%= answer.text %></p>
+            <p class="text-sm text-gray-500">Answered on <%= answer.createdAt.toDateString() %></p>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No answers found.</p>
+      <% } %>
+    </div>
+  </main>
+</body>
+</html>

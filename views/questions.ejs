@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="bg-blue-500 text-white p-4">
+    <div class="container mx-auto">
+      <h1 class="text-xl font-bold">CodeExchange</h1>
+      <nav>
+        <a href="/" class="mr-4">Home</a>
+        <% if (user) { %>
+          <a href="/questions/ask" class="mr-4">Ask Question</a>
+          <a href="/profile" class="mr-4">Profile</a>
+          <a href="/api/auth/logout" class="mr-4">Logout</a>
+        <% } else { %>
+          <a href="/login" class="mr-4">Login</a>
+          <a href="/register" class="mr-4">Register</a>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto mt-4">
+    <% questions.forEach(question => { %>
+      <div class="bg-white p-6 rounded-lg shadow-lg mb-4">
+        <h1 class="text-2xl font-bold mb-4"><%= question.title %></h1>
+        <p class="text-gray-700 mb-4"><%= question.description %></p>
+        <p class="text-sm text-gray-500 mb-4">Posted by <%= question.user.username %> on <%= new Date(question.createdAt).toDateString() %></p>
+        <a href="/questions/<%= question._id %>" class="text-blue-500">View Details</a>
+      </div>
+    <% }) %>
+  </main>
+</body>
+</html>
