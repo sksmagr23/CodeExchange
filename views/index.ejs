@@ -12,19 +12,19 @@
       <h1 class="text-xl font-bold">CodeExchange</h1>
       <nav>
         <a href="/" class="mr-4">Home</a>
+        <a href="/questions" class="mr-4">Questions</a>
         <% if (user) { %>
-          <a href="/questions/ask" class="mr-4">Ask Question</a>
+          <a href="/questions/ask" class="mr-4">Ask Question?</a>
           <a href="/profile" class="mr-4">Profile</a>
           <a href="/api/auth/logout" class="mr-4">Logout</a>
         <% } else { %>
           <a href="/login" class="mr-4">Login</a>
           <a href="/register" class="mr-4">Register</a>
         <% } %>
-        <a href="/questions" class="mr-4">Questions</a>
       </nav>
     </div>
   </header>
-
+  
   <main class="container mx-auto mt-4">
     <div class="bg-white p-6 rounded-lg shadow-lg">
       <h1 class="text-2xl font-bold mb-4">Questions</h1>

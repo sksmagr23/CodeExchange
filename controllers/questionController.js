@@ -1,17 +1,28 @@
+const User = require('../models/User');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 
 exports.createQuestion = async (req, res) => {
   const { title, description } = req.body;
 
-  const question = new Question({
-    title,
-    description,
-    user: req.user._id,
-  });
+  try {
+    const question = new Question({
+      title,
+      description,
+      user: req.user._id,
+    });
 
-  const createdQuestion = await question.save();
-  res.redirect(`/questions/${createdQuestion._id}`);
+    const createdQuestion = await question.save();
+
+    // Update user with the new question
+    await User.findByIdAndUpdate(req.user._id, {
+      $push: { questions: createdQuestion._id },
+    });
+
+    res.redirect(`/questions/${createdQuestion._id}`);
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating question' });
+  }
 };
 
 exports.getQuestions = async (req, res) => {
@@ -50,14 +61,24 @@ exports.renderQuestionPage = async (req, res) => {
 exports.createAnswer = async (req, res) => {
   const { text } = req.body;
 
-  const answer = new Answer({
-    text,
-    user: req.user._id,
-    question: req.params.id,
-  });
+  try {
+    const answer = new Answer({
+      text,
+      user: req.user._id,
+      question: req.params.id,
+    });
 
-  const createdAnswer = await answer.save();
-  res.status(201).json(createdAnswer);
+    const createdAnswer = await answer.save();
+
+    // Update user with the new answer
+    await User.findByIdAndUpdate(req.user._id, {
+      $push: { answers: createdAnswer._id },
+    });
+
+    res.redirect(`/questions/${req.params.id}`);
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating answer' });
+  }
 };
 
 exports.getAnswersByQuestionId = async (req, res) => {

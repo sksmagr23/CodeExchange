@@ -7,16 +7,13 @@ exports.getUserProfile = async (req, res) => {
     const user = await User.findById(req.user._id)
       .populate({
         path: 'questions',
-        model: Question,
         select: 'title description createdAt',
       })
       .populate({
         path: 'answers',
-        model: Answer,
         select: 'text createdAt',
         populate: {
           path: 'question',
-          model: Question,
           select: 'title'
         }
       });
