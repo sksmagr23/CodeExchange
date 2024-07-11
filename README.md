@@ -35,7 +35,7 @@ A simplified web application that replicates core functionalities of Stack Overf
    ```
 1. *Start the server*:
    ```bash
-   node app
+   npm start
    // The server should now be running at 'http://localhost:3000'
    ```         
 
