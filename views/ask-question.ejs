@@ -15,6 +15,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -107,7 +108,7 @@
               <label
                 for="title"
                 class="block text-sm font-medium text-gray-700 mb-1"
-                >Question Title</label
+                >Title</label
               >
               <div class="relative">
                 <div
@@ -120,7 +121,6 @@
                   name="title"
                   id="title"
                   class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8] shadow-sm outline-none"
-                  placeholder="e.g. How to center a div with Flexbox?"
                   required
                 />
               </div>
@@ -130,9 +130,27 @@
               <label
                 for="description"
                 class="block text-sm font-medium text-gray-700 mb-1"
-                >Description</label
               >
-              <div class="relative">
+                Description
+                <span class="text-sm text-blue-700">(Markdown supported)</span>
+              </label>
+              <div class="flex border-b border-gray-200 mb-2">
+                <button
+                  type="button"
+                  id="editTab"
+                  class="py-2 px-4 text-sm font-medium text-[#0466C8] border-b-2 border-[#0466C8]"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  id="previewTab"
+                  class="py-2 px-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                >
+                  Preview
+                </button>
+              </div>
+              <div id="editArea" class="relative">
                 <div
                   class="absolute top-3 left-3 flex items-start pointer-events-none"
                 >
@@ -143,9 +161,13 @@
                   id="description"
                   rows="8"
                   class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8] shadow-sm outline-none"
-                  placeholder="Include all the information someone would need to answer your question..."
+                  placeholder="Add more deatiled info about question"
                 ></textarea>
               </div>
+              <div
+                id="previewArea"
+                class="hidden bg-gray-50 p-4 border border-gray-300 rounded-lg min-h-[13rem] markdown-content overflow-auto"
+              ></div>
             </div>
 
             <div>
@@ -176,7 +198,7 @@
                 class="inline-flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-[#0466C8] hover:bg-[#0353A4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0466C8] transition"
               >
                 <i class="fas fa-paper-plane mr-2"></i>
-                Post Question
+                Post
               </button>
               <a
                 href="/questions"
@@ -221,6 +243,7 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // Mobile menu code
         const mobileMenuButton = document.getElementById("mobileMenuButton");
         const mobileMenu = document.getElementById("mobileMenu");
         const hamburgerIcon = document.getElementById("hamburgerIcon");
@@ -235,6 +258,60 @@
             hamburgerIcon.classList.remove("fa-times");
             hamburgerIcon.classList.add("fa-bars");
           }
+        });
+
+        // Markdown preview code
+        const editTab = document.getElementById("editTab");
+        const previewTab = document.getElementById("previewTab");
+        const editArea = document.getElementById("editArea");
+        const previewArea = document.getElementById("previewArea");
+        const description = document.getElementById("description");
+
+        // Function to update preview content
+        function updatePreview() {
+          const markdownContent = description.value || "*No content yet*";
+          previewArea.innerHTML = marked.parse(markdownContent);
+        }
+
+        // Switch to edit mode
+        editTab.addEventListener("click", function () {
+          editTab.classList.add(
+            "text-[#0466C8]",
+            "border-b-2",
+            "border-[#0466C8]"
+          );
+          editTab.classList.remove("text-gray-500");
+          previewTab.classList.remove(
+            "text-[#0466C8]",
+            "border-b-2",
+            "border-[#0466C8]"
+          );
+          previewTab.classList.add("text-gray-500");
+
+          editArea.classList.remove("hidden");
+          previewArea.classList.add("hidden");
+        });
+
+        // Switch to preview mode
+        previewTab.addEventListener("click", function () {
+          previewTab.classList.add(
+            "text-[#0466C8]",
+            "border-b-2",
+            "border-[#0466C8]"
+          );
+          previewTab.classList.remove("text-gray-500");
+          editTab.classList.remove(
+            "text-[#0466C8]",
+            "border-b-2",
+            "border-[#0466C8]"
+          );
+          editTab.classList.add("text-gray-500");
+
+          editArea.classList.add("hidden");
+          previewArea.classList.remove("hidden");
+
+          // Update preview content
+          updatePreview();
         });
       });
     </script>

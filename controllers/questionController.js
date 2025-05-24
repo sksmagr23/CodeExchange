@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
+const { marked } = require('marked');
 
 exports.createQuestion = async (req, res) => {
   const { title, description, tags } = req.body;
@@ -61,7 +62,15 @@ exports.renderQuestionPage = async (req, res) => {
   const question = await Question.findById(req.params.id).populate('user', 'username');
   const answers = await Answer.find({ question: req.params.id }).populate('user', 'username')
   if (question) {
-    res.render('question', { title: 'Question', question, answers, user: req.user });
+    // Convert markdown to HTML
+    const markdownDescription = marked(question.description);
+    res.render('question', { 
+      title: 'Question', 
+      question, 
+      answers, 
+      user: req.user,
+      markdownDescription 
+    });
   } else {
     res.status(404).render('404', { title: 'Question not found', user: req.user });
   }
@@ -111,5 +120,29 @@ exports.deleteQuestion = async (req, res) => {
   } catch (error) {
     console.error('Error deleting question:', error);
     res.status(500).json({ message: 'Error deleting question' });
+  }
+};
+
+exports.deleteAnswer = async (req, res) => {
+  try {
+    const answer = await Answer.findById(req.params.answerId);
+    if (!answer) {
+      return res.status(404).json({ message: 'Answer not found' });
+    }
+    
+    if (answer.user.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+    
+    await Answer.deleteOne({ _id: req.params.answerId });
+    await User.updateOne(
+      { _id: req.user._id }, 
+      { $pull: { answers: req.params.answerId } }
+    );
+    
+    res.json({ message: 'Answer deleted' });
+  } catch (error) {
+    console.error('Error deleting answer:', error);
+    res.status(500).json({ message: 'Error deleting answer' });
   }
 };
