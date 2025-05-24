@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
@@ -19,7 +20,7 @@ exports.registerUser = async (req, res) => {
     res.cookie('token', generateToken(user._id), { httpOnly: true });
     res.redirect('/');
   } else {
-    res.status(400).json({ message: 'Invalid user data' });
+    res.status(400).json({ message: 'No such user found' });
   }
 };
 
@@ -33,6 +34,27 @@ exports.loginUser = async (req, res) => {
   } else {
     res.status(401).json({ message: 'Invalid email or password' });
   }
+};
+
+exports.googleAuth = passport.authenticate('google', {
+  scope: ['profile', 'email']
+});
+
+exports.googleCallback = (req, res, next) => {
+  passport.authenticate('google', (err, user, info) => {
+    if (err) {
+      console.error('Google OAuth error:', err);
+      return res.redirect('/login?error=oauth_error');
+    }
+    
+    if (!user) {
+      return res.redirect('/login?error=oauth_failed');
+    }
+
+    const token = generateToken(user._id);
+    res.cookie('token', token, { httpOnly: true });
+    res.redirect('/');
+  })(req, res, next);
 };
   
 exports.logout = (req, res) => {

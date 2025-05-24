@@ -16,6 +16,14 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
+  profilePicture: {
+    type: String,
+  },
   questions: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -10,12 +10,32 @@ const authMiddleware = require('./middleware/authMiddleware')
 const Question = require('./models/Question')
 const Answer = require('./models/Answer')
 const { getUserProfile } = require('./controllers/userController')
+const passport = require('./config/passport');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 dotenv.config();
 
 connectDB();
 
 const app = express();
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URL
+  }),
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 
+  }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

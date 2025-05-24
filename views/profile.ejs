@@ -25,8 +25,19 @@
     <div class="p-1 rounded-xl shadow-xl mb-10">
       <div class="card1 p-4 rounded-xl mb-4">
         <h1 class="text-2xl font-bold mb-3 text-[#023E7D]">User Details</h1>
-        <p class="mb-2 text-md font-semibold text-[#002855]">Username:- <%= user.username %></p>
-        <p class="mb-2 text-md font-semibold text-[#002855]">Email:- <%= user.email %></p>
+        <div class="flex items-center gap-6">
+          <div class="w-24 h-24 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+            <% if (user.profilePicture) { %>
+              <img src="<%= user.profilePicture %>" alt="Profile Picture" class="w-full h-full object-cover">
+            <% } else { %>
+              <img src="/fav.svg" alt="Profile Picture" class="rounded-full w-full h-full object-cover">
+            <% } %>
+          </div>
+          <div>
+            <p class="mb-2 text-md font-semibold text-[#002855]">Username:- <%= user.username %></p>
+            <p class="mb-2 text-md font-semibold text-[#002855]">Email:- <%= user.email %></p>
+          </div>
+        </div>
       </div>
 
       <div class="card1 p-4 rounded-xl mb-4">
