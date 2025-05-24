@@ -52,7 +52,13 @@
           <% user.answers.forEach(answer => { %>
             <div class="mb-4 card p-2">
               <p class="text-gray-700 text-lg font-semibold">➤ <%= answer.text %></p>
-              <p class="text-sm text-gray-600">Answered on <%= new Date(answer.createdAt).toDateString() %> in <a href="/questions/<%= answer.question._id %>" class="text-orange-600 font-semibold hover:text-red-800"><%= answer.question.title %></a></p>
+              <p class="text-sm text-gray-600">Answered on <%= new Date(answer.createdAt).toDateString() %> 
+              <% if (answer.question) { %>
+                in <a href="/questions/<%= answer.question._id %>" class="text-orange-600 font-semibold hover:text-red-800"><%= answer.question.title %></a>
+              <% } else { %>
+                (Question no longer exists)
+              <% } %>
+              </p>
             </div>
             <% }) %>
             <% } else { %>
