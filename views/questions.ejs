@@ -6,59 +6,219 @@
   <link rel="icon" type="image/svg+xml" href="/fav.svg">
   <title><%= title %></title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-gradient-to-r from-[#84d2f6] to-[#edf6f9] text-gray-900 font-mono">
-  <header class="bg-[#0466C8] text-white px-2 py-2.5 shadow-xl static">
-    <div class="container mx-auto">
-        <h1 class="text-xl font-bold mb-1">CodeExchange</h1>
-      <nav>
-        <a href="/" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
-          <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Home</span>
-        </a>
-        <% if (user) { %>
-          <a href="/questions/ask" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
-            <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Ask Question?</span>
+<body class="bg-gradient-to-br from-[#f8fafc] to-[#e0f2fe] text-gray-800 font-sans min-h-screen flex flex-col">
+  <header class="bg-[#0466C8] text-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fas fa-code text-xl mr-2"></i>
+          <h1 class="text-2xl font-bold font-mono">CodeExchange</h1>
+        </div>
+        <nav class="hidden md:flex space-x-6">
+          <a href="/" class="nav-link">
+            <i class="fas fa-home mr-1"></i> Home
           </a>
-          <a href="/questions" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
-            <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Questions</span>
+          <a href="/questions" class="nav-link active">
+            <i class="fas fa-question-circle mr-1"></i> Questions
           </a>
-          <a href="/profile" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
-            <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Profile</span>
+          <% if (user) { %>
+            <a href="/questions/ask" class="nav-link">
+              <i class="fas fa-pen mr-1"></i> Ask
+            </a>
+            <a href="/profile" class="nav-link">
+              <i class="fas fa-user mr-1"></i> Profile
+            </a>
+            <a href="/api/auth/logout" class="nav-link">
+              <i class="fas fa-sign-out-alt mr-1"></i> Logout
+            </a>
+          <% } else { %>
+            <a href="/login" class="nav-link">
+              <i class="fas fa-sign-in-alt mr-1"></i> Login
+            </a>
+            <a href="/register" class="nav-link">
+              <i class="fas fa-user-plus mr-1"></i>
+              Register
           </a>
-          <a href="/api/auth/logout" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
-            <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Logout</span>
+          <% } %>
+        </nav>
+
+        <button id="mobileMenuButton" class="md:hidden text-white text-xl p-2 focus:outline-none">
+          <i id="hamburgerIcon" class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="md:hidden bg-[#0353A4] hidden">
+      <div class="container mx-auto px-4 py-2">
+        <nav class="flex flex-col space-y-2 pb-3">
+          <a href="/" class="mobile-nav-link">
+            <i class="fas fa-home mr-2"></i> Home
           </a>
-        <% } else { %>
-          <a href="/login" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Login</span></a>
-          <a href="/register" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Register</span></a>
-        <% } %>
-      </nav>
+          <a href="/questions" class="mobile-nav-link active">
+            <i class="fas fa-question-circle mr-2"></i> Questions
+          </a>
+          <% if (user) { %>
+            <a href="/questions/ask" class="mobile-nav-link">
+              <i class="fas fa-pen mr-2"></i> Ask
+            </a>
+            <a href="/profile" class="mobile-nav-link">
+              <i class="fas fa-user mr-2"></i> Profile
+            </a>
+            <a href="/api/auth/logout" class="mobile-nav-link">
+              <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+          <% } else { %>
+            <a href="/login" class="mobile-nav-link">
+              <i class="fas fa-sign-in-alt mr-2"></i> Login
+            </a>
+            <a href="/register" class="mobile-nav-link">
+              <i class="fas fa-user-plus mr-2"></i> Register
+            </a>
+          <% } %>
+        </nav>
+      </div>
     </div>
   </header>
 
-  <main class="container mx-auto mt-8 mb-10">
-    <% questions.forEach(question => { %>
-      <div class="card px-4 py-3 rounded-2xl mb-4 transition-all duration-400 transform hover:scale-105 hover:bg-white">
-        <h1 class="text-2xl font-bold mb-1 text-[#023E7D]"><%= question.title %></h1>
-        <% if (question.tags && question.tags.length > 0) { %>
-        <div class="mb-3">
-          <div class="flex flex-wrap gap-2">
-            <% question.tags.forEach(tag => { %>
-              <a href="/questions?tag=<%= tag %>" class="px-2.5 py-1 text-sm bg-[#0466C8] text-white rounded-2xl hover:bg-gray-800 transition-colors cursor-pointer">
-                <%= tag %>
-              </a>
-            <% }) %>
-          </div>
-        </div>
-      <% } %>
-        <p class="text-sm text-[#5C677D] mb-2">— by <%= question.user.username %> on <%= new Date(question.createdAt).toLocaleString() %></p>
-        <a href="/questions/<%= question._id %>" class="text-[#0466C8] hover:text-[#0353A4]">view more</a>
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-2xl md:text-3xl font-bold text-[#023E7D]">
+          <i class="fas fa-question-circle mr-2"></i> Questions
+        </h1>
+        
+        <% if (user) { %>
+          <a href="/questions/ask" class="inline-flex items-center px-4 py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition shadow-md">
+            <i class="fas fa-plus mr-2"></i> Ask Question
+          </a>
+        <% } %>
       </div>
-    <% }) %>
+      
+      <div class="space-y-6">
+        <% questions.forEach(question => { %>
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+            <div class="p-6">
+              <h2 class="text-xl font-semibold text-[#023E7D] mb-2">
+                <a href="/questions/<%= question._id %>" class="hover:text-[#0466C8]">
+                  <%= question.title %>
+                </a>
+              </h2>
+              
+              <div class="flex flex-wrap gap-2 mb-3">
+                <% if (question.tags && question.tags.length > 0) { %>
+                  <% question.tags.forEach(tag => { %>
+                    <a href="/questions?tag=<%= tag %>" class="px-3 py-1 text-sm bg-blue-100 text-[#0466C8] rounded-full hover:bg-blue-200 transition-colors">
+                      <%= tag %>
+                    </a>
+                  <% }) %>
+                <% } %>
+              </div>
+              
+              <div class="flex items-center text-gray-500 text-sm">
+                <div class="flex items-center mr-4">
+                  <i class="fas fa-user mr-1"></i>
+                  <span><%= question.user.username %></span>
+                </div>
+                <div class="flex items-center">
+                  <i class="far fa-clock mr-1"></i>
+                  <span><%= new Date(question.createdAt).toLocaleString() %></span>
+                </div>
+                
+                <div class="ml-auto">
+                  <a href="/questions/<%= question._id %>" class="text-[#0466C8] hover:text-[#0353A4] flex items-center">
+                    View Question <i class="fas fa-chevron-right text-xs ml-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+
+        <% if (questions.length === 0) { %>
+          <div class="bg-white rounded-xl shadow-md p-8 text-center">
+            <div class="text-gray-400 mb-4">
+              <i class="fas fa-question-circle text-5xl"></i>
+            </div>
+            <h3 class="text-xl font-medium text-gray-700 mb-2">No questions found</h3>
+            <p class="text-gray-500">Be the first to ask a question!</p>
+            <% if (user) { %>
+              <a href="/questions/ask" class="inline-block mt-6 px-6 py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition">
+                Ask a Question
+              </a>
+            <% } else { %>
+              <a href="/login" class="inline-block mt-6 px-6 py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition">
+                Login to Ask
+              </a>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
+    </div>
   </main>
-  <footer class="bg-[#0466C8] mt-4 p-1 text-center bottom-0 fixed left-0 right-0 w-screen shadow-lg">
-    <p class="text-white">&copy 2024 CodeExchange. All rights reserved. Created by Saksham</p>
+
+  <footer class="bg-[#023E7D] py-6 text-white mt-auto">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0 flex items-center">
+          <i class="fas fa-code text-xl mr-2"></i>
+          <span class="font-mono font-bold text-lg">CodeExchange</span>
+        </div>
+        <div class="mb-4 md:mb-0 text-sm text-gray-200">
+          &copy; 2024 CodeExchange. All rights reserved. Created by Saksham
+        </div>
+      </div>
+    </div>
   </footer>
+
+  <style>
+    .nav-link {
+      @apply px-3 py-2 rounded-md hover:bg-white hover:bg-opacity-10 transition;
+    }
+    .nav-link.active {
+      @apply bg-white bg-opacity-10;
+    }
+    .mobile-nav-link {
+      @apply px-3 py-2.5 rounded-md hover:bg-white hover:bg-opacity-10 transition flex items-center;
+    }
+    .mobile-nav-link.active {
+      @apply bg-white bg-opacity-10;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuButton = document.getElementById('mobileMenuButton');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const hamburgerIcon = document.getElementById('hamburgerIcon');
+      
+      mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+        
+        if (hamburgerIcon.classList.contains('fa-bars')) {
+          hamburgerIcon.classList.remove('fa-bars');
+          hamburgerIcon.classList.add('fa-times');
+        } else {
+          hamburgerIcon.classList.remove('fa-times');
+          hamburgerIcon.classList.add('fa-bars');
+        }
+      });
+    });
+  </script>
 </body>
 </html>

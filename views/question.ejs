@@ -4,79 +4,280 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/fav.svg">
-  <title>Question</title>
+  <title><%= question.title %> - CodeExchange</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-gradient-to-r from-[#84d2f6] to-[#edf6f9] text-gray-900 font-mono">
-  <header class="bg-[#0466C8] text-white px-2 py-2.5 shadow-xl static">
-    <div class="container mx-auto">
-        <h1 class="text-xl font-bold mb-1">CodeExchange</h1>
-      <nav>
-        <a href="/" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Home</span></a>
-        <% if (user) { %>
-          <a href="/questions" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Questions</span></a>
-          <a href="/profile" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Profile</span></a>
-          <a href="/api/auth/logout" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Logout</span></a>
-        <% } else { %>
-          <a href="/login" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Login</span></a>
-          <a href="/register" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Register</span></a>
-        <% } %>
-      </nav>
+<body class="bg-gradient-to-br from-[#f8fafc] to-[#e0f2fe] text-gray-800 font-sans min-h-screen flex flex-col">
+  <header class="bg-[#0466C8] text-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fas fa-code text-xl mr-2"></i>
+          <h1 class="text-2xl font-bold font-mono">CodeExchange</h1>
+        </div>
+        <nav class="hidden md:flex space-x-6">
+          <a href="/" class="nav-link">
+            <i class="fas fa-home mr-1"></i> Home
+          </a>
+          <a href="/questions" class="nav-link active">
+            <i class="fas fa-question-circle mr-1"></i> Questions
+          </a>
+          <% if (user) { %>
+            <a href="/questions/ask" class="nav-link">
+              <i class="fas fa-pen mr-1"></i> Ask
+            </a>
+            <a href="/profile" class="nav-link">
+              <i class="fas fa-user mr-1"></i> Profile
+            </a>
+            <a href="/api/auth/logout" class="nav-link">
+              <i class="fas fa-sign-out-alt mr-1"></i> Logout
+            </a>
+          <% } else { %>
+            <a href="/login" class="nav-link">
+              <i class="fas fa-sign-in-alt mr-1"></i> Login
+            </a>
+            <a href="/register" class="nav-link">
+              <i class="fas fa-user-plus mr-1"></i>
+              Register
+          </a>
+          <% } %>
+        </nav>
+      <button id="mobileMenuButton" class="md:hidden text-white text-xl p-2 focus:outline-none">
+          <i id="hamburgerIcon" class="fas fa-bars"></i>
+      </button>
+      </div>
     </div>
+
+    
+    <div id="mobileMenu" class="md:hidden bg-[#0353A4] hidden">
+  <div class="container mx-auto px-4 py-2">
+    <nav class="flex flex-col space-y-2 pb-3">
+      <a href="/" class="mobile-nav-link">
+        <i class="fas fa-home mr-2"></i> Home
+      </a>
+      <a href="/questions" class="mobile-nav-link active">
+        <i class="fas fa-question-circle mr-2"></i> Questions
+      </a>
+      <% if (user) { %>
+        <a href="/questions/ask" class="mobile-nav-link">
+          <i class="fas fa-pen mr-2"></i> Ask
+        </a>
+        <a href="/profile" class="mobile-nav-link">
+          <i class="fas fa-user mr-2"></i> Profile
+        </a>
+        <a href="/api/auth/logout" class="mobile-nav-link">
+          <i class="fas fa-sign-out-alt mr-2"></i> Logout
+        </a>
+      <% } else { %>
+        <a href="/login" class="mobile-nav-link">
+          <i class="fas fa-sign-in-alt mr-2"></i> Login
+        </a>
+        <a href="/register" class="mobile-nav-link">
+          <i class="fas fa-user-plus mr-2"></i> Register
+        </a>
+      <% } %>
+    </nav>
+  </div>
+</div>
   </header>
   
-  <main class="container card mx-auto mt-4 rounded-2xl">
-    <div class="p-4">
-      <div class="flex justify-between">
-        <h1 class="text-3xl font-bold mb-3 text-[#023E7D]"><%= question.title %></h1>
-        <a href="/questions" class="text-lg text-white transition-all ease duration-300 transform font-bold"><span class="bg-[#023E7D] px-3 py-1 rounded-xl transition-all ease duration-300 transform hover:bg-[#002855] active:bg-[#001845] border border-white">Back</span></a>
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+        <div class="bg-gradient-to-r from-[#0466C8] to-[#0353A4] p-4">
+          <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white"><%= question.title %></h1>
+            <a href="/questions" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-1.5 rounded-md transition flex items-center text-sm">
+              <i class="fas fa-arrow-left mr-1"></i> Back to Questions
+            </a>
+          </div>
+        </div>
+        
+        <div class="p-6">
+          <% if (question.tags && question.tags.length > 0) { %>
+            <div class="mb-4">
+              <div class="flex flex-wrap gap-2">
+                <span class="text-gray-600 font-medium mb-2 block">Tags:</span>
+                <% question.tags.forEach(tag => { %>
+                  <a href="/questions?tag=<%= tag %>" class="px-3 py-1 text-sm bg-blue-100 text-[#0466C8] rounded-full hover:bg-blue-200 transition-colors">
+                    <%= tag %>
+                  </a>
+                <% }) %>
+              </div>
+            </div>
+          <% } %>
+
+          <div class="bg-gray-50 p-4 rounded-lg mb-4">
+            <p class="text-gray-800 whitespace-pre-wrap"><%= question.description %></p>
+          </div>
+          
+          <div class="flex items-center text-sm text-gray-500">
+            <div class="flex items-center">
+              <i class="fas fa-user-circle mr-1"></i>
+              <span class="font-medium"><%= question.user.username %></span>
+            </div>
+            <div class="mx-2">•</div>
+            <div class="flex items-center">
+              <i class="far fa-clock mr-1"></i>
+              <span><%= new Date(question.createdAt).toLocaleString() %></span>
+            </div>
+          </div>
+        </div>
       </div>
-      <% if (question.tags && question.tags.length > 0) { %>
-        <div class="mb-3">
-          <div class="flex flex-wrap gap-2">
-            <% question.tags.forEach(tag => { %>
-              <a href="/questions?tag=<%= tag %>" class="px-3 py-1 text-sm bg-[#0466C8] text-white rounded-2xl hover:bg-gray-800 transition-colors cursor-pointer">
-                <%= tag %>
-              </a>
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+        <div class="bg-gray-50 border-b p-4">
+          <h2 class="text-xl font-semibold text-[#023E7D] flex items-center">
+            <i class="fas fa-comments mr-2"></i>
+            Answers (<%= answers.length %>)
+          </h2>
+        </div>
+
+        <div class="divide-y divide-gray-100">
+          <% if (answers.length === 0) { %>
+            <div class="p-8 text-center">
+              <div class="text-gray-400 mb-3">
+                <i class="fas fa-comments text-4xl"></i>
+              </div>
+              <p class="text-gray-600">No answers yet. Be the first to answer this question!</p>
+            </div>
+          <% } else { %>
+            <% answers.forEach(answer => { %>
+              <div class="p-5 hover:bg-gray-50">
+                <div class="bg-gray-50 p-4 rounded-lg mb-3">
+                  <p class="text-gray-800"><%= answer.text %></p>
+                </div>
+                <div class="flex items-center text-sm text-gray-500">
+                  <div class="flex items-center">
+                    <i class="fas fa-user-circle mr-1"></i>
+                    <span class="font-medium"><%= answer.user.username %></span>
+                  </div>
+                  <div class="mx-2">•</div>
+                  <div class="flex items-center">
+                    <i class="far fa-clock mr-1"></i>
+                    <span><%= new Date(answer.createdAt).toLocaleString() %></span>
+                  </div>
+                </div>
+              </div>
             <% }) %>
-          </div>
+          <% } %>
         </div>
-      <% } %>
-      <p class="text-[#001233] mb-2 text-lg"><%= question.description %></p>
-      <p class="text-md text-[#5C677D] mb-4">-posted by <%= question.user.username %> on <%= new Date(question.createdAt).toLocaleString() %></p>
+      </div>
 
-      <h2 class="text-xl font-semibold mb-3 underline text-[#023E7D]">Answers (<%= answers.length %>)</h2>
-      <% if (answers.length === 0) { %>
-        <div class="mb-4 p-4 bg-gray-100 rounded-lg">
-          <p class="text-[#5C677D] text-center">No answers yet. Be the first to answer this question!</p>
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-gray-50 border-b p-4">
+          <h3 class="text-xl font-semibold text-[#023E7D] flex items-center">
+            <i class="fas fa-reply mr-2"></i>
+            Your Answer
+          </h3>
         </div>
-      <% } else { %>
-      <% answers.forEach(answer => { %>
-        <div class="mb-2.5">
-          <p class="text-[#001233]">➤ <%= answer.text %></p>
-          <p class="text-sm text-[#5C677D]">-by <%= answer.user.username %> on <%= new Date(answer.createdAt).toLocaleString() %></p>
-        </div>
-      <% }) %>
-      <% } %>
 
-      <% if (user) { %>
-        <form action="/questions/<%= question._id %>/answers" method="POST">
-          <div class="mb-4">
-            <label for="text" class="block text-[#023E7D]">Post an Answer</label>
-            <textarea name="text" id="text" class="w-full px-3 py-1.5 border border-[#5C677D] rounded-xl" placeholder="If you know an answer to this question, you can answer it or can left a suggestion" required></textarea>
-          </div>
-          <div class="mb-4">
-            <button type="submit" class="form-button">Post Answer</button>
-          </div>
-        </form>
-      <% } else { %>
-        <p class="text-[#001233]">Please <a href="/login" class="text-[#0466C8] hover:text-[#0353A4]">login</a>/<a href="/register" class="text-[#0466C8] hover:text-[#0353A4]">register</a> to post an answer.</p>
-      <% } %>
+        <div class="p-6">
+          <% if (user) { %>
+            <form action="/questions/<%= question._id %>/answers" method="POST" class="space-y-4">
+              <div>
+                <textarea 
+                  name="text" 
+                  id="text" 
+                  rows="5" 
+                  class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8] shadow-sm outline-none" 
+                  placeholder="Share your solution or suggest an approach..."
+                  required
+                ></textarea>
+              </div>
+              <div class="pt-2">
+                <button 
+                  type="submit" 
+                  class="inline-flex items-center px-6 py-2.5 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-[#0466C8] hover:bg-[#0353A4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0466C8] transition"
+                >
+                  <i class="fas fa-paper-plane mr-2"></i>
+                  Post Answer
+                </button>
+              </div>
+            </form>
+          <% } else { %>
+            <div class="bg-blue-50 border-l-4 border-[#0466C8] p-4 rounded">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-info-circle text-[#0466C8]"></i>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm text-gray-700">
+                    You need to be logged in to answer this question. 
+                    <a href="/login" class="text-[#0466C8] hover:text-[#0353A4] font-medium">Login</a> or 
+                    <a href="/register" class="text-[#0466C8] hover:text-[#0353A4] font-medium">Register</a> to continue.
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      </div>
     </div>
   </main>
-  <footer class="bg-[#0466C8] mt-4 p-1 text-center bottom-0 fixed left-0 right-0 w-screen shadow-lg">
-    <p class="text-white">&copy 2024 CodeExchange. All rights reserved. Created by Saksham</p>
+
+  <footer class="bg-[#023E7D] py-6 text-white mt-auto">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0 flex items-center">
+          <i class="fas fa-code text-xl mr-2"></i>
+          <span class="font-mono font-bold text-lg">CodeExchange</span>
+        </div>
+        <div class="mb-4 md:mb-0 text-sm text-gray-200">
+          &copy; 2024 CodeExchange. All rights reserved. Created by Saksham
+        </div>
+      </div>
+    </div>
   </footer>
+
+  <style>
+    .nav-link {
+      @apply px-3 py-2 rounded-md hover:bg-white hover:bg-opacity-10 transition;
+    }
+    .nav-link.active {
+      @apply bg-white bg-opacity-10;
+    }
+    .mobile-nav-link {
+      @apply px-3 py-2.5 rounded-md hover:bg-white hover:bg-opacity-10 transition flex items-center;
+    }
+    .mobile-nav-link.active {
+      @apply bg-white bg-opacity-10;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    
+    mobileMenuButton.addEventListener('click', function() {
+      mobileMenu.classList.toggle('hidden');
+      
+      if (hamburgerIcon.classList.contains('fa-bars')) {
+        hamburgerIcon.classList.remove('fa-bars');
+        hamburgerIcon.classList.add('fa-times');
+      } else {
+        hamburgerIcon.classList.remove('fa-times');
+        hamburgerIcon.classList.add('fa-bars');
+      }
+    });
+  });
+  </script>
 </body>
 </html>

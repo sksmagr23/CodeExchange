@@ -11,7 +11,7 @@ exports.registerUser = async (req, res) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    return res.status(400).json({ message: 'User already exists' });
+    return res.redirect('/register?error=user_found');
   }
 
   const user = await User.create({ username, email, password });
@@ -32,7 +32,7 @@ exports.loginUser = async (req, res) => {
     res.cookie('token', generateToken(user._id), { httpOnly: true });
     res.redirect('/');
   } else {
-    res.status(401).json({ message: 'Invalid email or password' });
+    return res.redirect('/login?error=invalid_credentials');
   }
 };
 

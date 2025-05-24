@@ -6,51 +6,219 @@
   <link rel="icon" type="image/svg+xml" href="/fav.svg">
   <title>CodeExchange</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-gradient-to-r from-[#84d2f6] to-[#edf6f9] text-gray-900 font-mono">
-  <header class="bg-[#0466C8] text-white px-2 py-2.5 shadow-xl static">
-    <div class="container mx-auto">
-        <h1 class="text-xl font-bold mb-1">CodeExchange</h1>
-      <nav>
-        <a href="/" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Home</span></a>
-        <a href="/questions" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Questions</span></a>
-        <% if (user) { %>
-          <a href="/questions/ask" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Ask Question?</span></a>
-          <a href="/profile" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Profile</span></a>
-          <a href="/api/auth/logout" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Logout</span></a>
-        <% } else { %>
-          <a href="/login" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Login</span></a>
-          <a href="/register" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Register</span></a>
-        <% } %>
-      </nav>
+<body class="bg-gradient-to-br from-[#f8fafc] to-[#e0f2fe] text-gray-800 font-sans min-h-screen flex flex-col">
+  <header class="bg-[#0466C8] text-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fas fa-code text-xl mr-2"></i>
+          <h1 class="text-2xl font-bold font-mono">CodeExchange</h1>
+        </div>
+        <nav class="hidden md:flex space-x-6">
+          <a href="/" class="nav-link active">
+            <i class="fas fa-home mr-1"></i> Home
+          </a>
+          <a href="/questions" class="nav-link">
+            <i class="fas fa-question-circle mr-1"></i> Questions
+          </a>
+          <% if (user) { %>
+            <a href="/questions/ask" class="nav-link">
+              <i class="fas fa-pen mr-1"></i> Ask
+            </a>
+            <a href="/profile" class="nav-link">
+              <i class="fas fa-user mr-1"></i> Profile
+            </a>
+            <a href="/api/auth/logout" class="nav-link">
+              <i class="fas fa-sign-out-alt mr-1"></i> Logout
+            </a>
+          <% } else { %>
+            <a href="/login" class="nav-link">
+              <i class="fas fa-sign-in-alt mr-1"></i> Login
+            </a>
+            <a href="/register" class="nav-link">
+              <i class="fas fa-user-plus mr-1"></i>
+              Register
+            </a>
+          <% } %>
+        </nav>
+        <button id="mobileMenuButton" class="md:hidden text-white text-xl p-2 focus:outline-none">
+          <i id="hamburgerIcon" class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div id="mobileMenu" class="md:hidden bg-[#0353A4] hidden">
+      <div class="container mx-auto px-4 py-2">
+        <nav class="flex flex-col space-y-2 pb-3">
+          <a href="/" class="mobile-nav-link active">
+            <i class="fas fa-home mr-2"></i> Home
+          </a>
+          <a href="/questions" class="mobile-nav-link">
+            <i class="fas fa-question-circle mr-2"></i> Questions
+          </a>
+          <% if (user) { %>
+            <a href="/questions/ask" class="mobile-nav-link">
+              <i class="fas fa-pen mr-2"></i> Ask
+            </a>
+            <a href="/profile" class="mobile-nav-link">
+              <i class="fas fa-user mr-2"></i> Profile
+            </a>
+            <a href="/api/auth/logout" class="mobile-nav-link">
+              <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+          <% } else { %>
+            <a href="/login" class="mobile-nav-link">
+              <i class="fas fa-sign-in-alt mr-2"></i> Login
+            </a>
+            <a href="/register" class="mobile-nav-link">
+              <i class="fas fa-user-plus mr-2"></i>
+              Register
+            </a>
+          <% } %>
+        </nav>
+      </div>
     </div>
   </header>
   
-  <main class="container card1 mx-auto my-4 rounded-xl mb-10">
-    <div class="container mx-auto p-5">
-          <h1 class="text-4xl font-bold mb-4 text-center text-[#023E7D]">Welcome to CodeExchange</h1>
-          <p class="text-lg mb-4 font-semibold text-[#023E7D]">Your go-to platform for finding answers to your code related problems. Whether you're a beginner or a seasoned developer, you'll find the help you need here.</p>
-          <p class="text-lg mb-2 font-semibold text-[#023E7D]">Join our community of coders to share knowledge, solve problems, and advance your coding skills.</p>
-            <p class="text-[#023E7D]"> Start by 
-            <% if (user) { %>
-              <a href="/questions/ask" class="text-[#0466C8] hover:text-[#0353A4]">Asking a Question</a>
-            <% } else { %>
-              <a href="/login" class="text-[#0466C8] hover:text-[#0353A4]">Asking a Question</a>
-            <% } %>
-            </p>
+  <section class="bg-gradient-to-r from-[#0466C8] to-[#0353A4] text-white py-12">
+    <div class="container mx-auto px-6 flex flex-wrap items-center">
+      <div class="w-full lg:w-1/2 lg:pr-12 mb-10 lg:mb-0">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">Share Knowledge.<br>Get Answers.</h1>
+        <p class="text-lg mb-8 opacity-90">Your go-to platform for finding solutions to coding problems. Join our community of developers learning and growing together.</p>
+        <div class="flex space-x-4">
+          <% if (user) { %>
+            <a href="/questions/ask" class="bg-white text-[#0466C8] px-6 py-3 rounded-lg font-medium hover:bg-opacity-95 transition shadow-lg transform hover:-translate-y-0.5">
+              Ask a Question
+            </a>
+            <a href="/questions" class="border border-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:bg-opacity-10 transition">
+              Browse Questions
+            </a>
+          <% } else { %>
+            <a href="/login" class="bg-white text-[#0466C8] px-6 py-3 rounded-lg font-medium hover:bg-opacity-95 transition shadow-lg transform hover:-translate-y-0.5">
+              Join CodeExchange
+            </a>
+            <a href="/questions" class="border border-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:bg-opacity-10 transition">
+              Browse Questions
+            </a>
+          <% } %>
+        </div>
+      </div>
+      <div class="w-full lg:w-1/2 flex justify-center">
+        <img src="/indes.png" alt="Developer illustration" class="w-full max-w-md">
+      </div>
     </div>
-    <div class="container mx-auto px-6 py-8">
-        <h2 class="text-2xl font-bold mb-6 text-[#023E7D]">About CodeExchange</h2>
-        <p class="text-[#001233] mb-4">➤ CodeExchange is a collaborative platform for programmers to find answers to their coding questions. Whether you're working on web development, data science, machine learning, or any other programming discipline, our community is here to help.</p>
-        <p class="text-[#001233] mb-4">➤ Our mission is to build a comprehensive and reliable resource for developers to seek and share knowledge. We encourage participation and collaboration to make coding more accessible and enjoyable for everyone.</p>
-        <p class="text-[#001233] mb-4">➤ Join CodeExchange today to ask questions, provide answers, and become part of a growing community of developers dedicated to helping each other learn and grow.</p>
-        <p class="text-[#001233] mb-4">➤ To view the questions on our platform: <a href="/questions" class="text-[#0466C8] hover:text-[#0353A4]">Click here</a></p>
-    </div>
+  </section>
+
+  <main class="flex-grow">
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-12 text-[#023E7D]">Why Choose CodeExchange?</h2>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+              <i class="fas fa-comments text-[#0466C8] text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Community Powered</h3>
+            <p class="text-gray-600">Join thousands of developers helping each other solve coding challenges daily.</p>
+          </div>
+          
+          <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+              <i class="fas fa-code text-[#0466C8] text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">All Technologies</h3>
+            <p class="text-gray-600">From web development to machine learning, we cover all programming disciplines.</p>
+          </div>
+          
+          <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+              <i class="fas fa-bolt text-[#0466C8] text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Fast Solutions</h3>
+            <p class="text-gray-600">Get quick responses from experts to unblock your development process.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-12 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-[#023E7D]">About CodeExchange</h2>
+        
+        <div class="bg-white rounded-xl shadow-sm p-8 mb-6">
+          <p class="text-gray-700 mb-4"><span class="font-medium text-[#0466C8]">➤</span> CodeExchange is a collaborative platform for programmers to find answers to their coding questions. Whether you're working on web development, data science, machine learning, or any other programming discipline, our community is here to help.</p>
+          <p class="text-gray-700 mb-4"><span class="font-medium text-[#0466C8]">➤</span> Our mission is to build a comprehensive and reliable resource for developers to seek and share knowledge. We encourage participation and collaboration to make coding more accessible and enjoyable for everyone.</p>
+          <p class="text-gray-700 mb-4"><span class="font-medium text-[#0466C8]">➤</span> Join CodeExchange today to ask questions, provide answers, and become part of a growing community of developers dedicated to helping each other learn and grow.</p>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer class="bg-[#0466C8] mt-4 p-1 text-center bottom-0 fixed left-0 right-0 w-screen shadow-lg">
-    <p class="text-white">&copy 2024 CodeExchange. All rights reserved. Created by Saksham</p>
+
+  <footer class="bg-[#023E7D] py-6 text-white">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0 flex items-center">
+          <i class="fas fa-code text-xl mr-2"></i>
+          <span class="font-mono font-bold text-lg">CodeExchange</span>
+        </div>
+        <div class="mb-4 md:mb-0 text-sm text-gray-200">
+          &copy; 2024 CodeExchange. All rights reserved. Created by Saksham
+        </div>
+      </div>
+    </div>
   </footer>
+
+  <style>
+    .nav-link {
+      @apply px-3 py-2 rounded-md hover:bg-white hover:bg-opacity-10 transition;
+    }
+    .nav-link.active {
+      @apply bg-white bg-opacity-10;
+    }
+    .mobile-nav-link {
+      @apply px-3 py-2.5 rounded-md hover:bg-white hover:bg-opacity-10 transition flex items-center;
+    }
+    .mobile-nav-link.active {
+      @apply bg-white bg-opacity-10;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuButton = document.getElementById('mobileMenuButton');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const hamburgerIcon = document.getElementById('hamburgerIcon');
+      
+      mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+        
+        if (hamburgerIcon.classList.contains('fa-bars')) {
+          hamburgerIcon.classList.remove('fa-bars');
+          hamburgerIcon.classList.add('fa-times');
+        } else {
+          hamburgerIcon.classList.remove('fa-times');
+          hamburgerIcon.classList.add('fa-bars');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
 
