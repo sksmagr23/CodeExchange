@@ -3,17 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/fav.svg">
   <title>Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 text-gray-900 font-mono">
-  <header class="bg-orange-600 text-white px-2 py-2.5 shadow-xl static">
+<body class="bg-gradient-to-r from-[#84d2f6] to-[#edf6f9] text-gray-900 font-mono">
+  <header class="bg-[#0466C8] text-white px-2 py-2.5 shadow-xl static">
     <div class="container mx-auto">
         <h1 class="text-xl font-bold mb-1">CodeExchange</h1>
       <nav>
-        <a href="/" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Home</span></a>
-        <a href="/register" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Register</span></a>
+        <a href="/" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
+          <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Home</span>
+        </a>
+        <a href="/register" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
+          <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Register</span>
+        </a>
       </nav>
     </div>
   </header>
@@ -23,23 +28,23 @@
       <h1 class="form-title">Login</h1>
       <form action="/api/auth/login" method="POST">
         <div class="form-field">
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="Enter your registered email" required>
+          <label for="email" class="text-[#023E7D]">Email</label>
+          <input type="email" name="email" id="email" placeholder="Enter your registered email" required class="border-[#5C677D]">
         </div>
         <div class="form-field">
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password" placeholder="Enter your password" required>
+          <label for="password" class="text-[#023E7D]">Password</label>
+          <input type="password" name="password" id="password" placeholder="Enter your password" required class="border-[#5C677D]">
         </div>
         <div class="mb-4">
           <button type="submit" class="form-button transition-all duration-300 transform">Login</button>
         </div>
       </form>
-      <p class="text-center text-md mt-4">
-        Don't have an account? <a href="/register" class="text-amber-900 hover:text-red-600 font-bold">Register</a>
+      <p class="text-center text-md mt-4 text-[#001233]">
+        Don't have an account? <a href="/register" class="text-[#0466C8] hover:text-[#0353A4] font-bold">Register</a>
       </p>
     </div>
   </main>
-  <footer class="bg-orange-600 mt-4 p-1 text-center bottom-0 fixed left-0 right-0 w-screen shadow-lg">
+  <footer class="bg-[#0466C8] mt-4 p-1 text-center bottom-0 fixed left-0 right-0 w-screen shadow-lg">
     <p class="text-white">&copy 2024 CodeExchange. All rights reserved. Created by Saksham</p>
   </footer>
 </body>

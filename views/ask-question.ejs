@@ -3,20 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/fav.svg">
   <title>Ask a Question</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 text-gray-900 font-mono">
-  <header class="bg-orange-600 text-white px-2 py-2.5 shadow-xl static">
+<body class="bg-gradient-to-r from-[#84d2f6] to-[#edf6f9] text-gray-900 font-mono">
+  <header class="bg-[#0466C8] text-white px-2 py-2.5 shadow-xl static">
     <div class="container mx-auto">
         <h1 class="text-xl font-bold mb-1">CodeExchange</h1>
       <nav>
-        <a href="/" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Home</span></a>
-        <a href="/questions" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Questions</span></a>
+        <a href="/" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
+          <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Home</span>
+        </a>
+        <a href="/questions" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
+          <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Questions</span>
+        </a>
         <% if (user) { %>
-          <a href="/profile" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Profile</span></a>
-          <a href="/api/auth/logout" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Logout</span></a>
+          <a href="/profile" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
+            <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Profile</span>
+          </a>
+          <a href="/api/auth/logout" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold">
+            <span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Logout</span>
+          </a>
         <% } else { %>
           <a href="/login" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Login</span></a>
           <a href="/register" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Register</span></a>
@@ -30,12 +39,12 @@
       <h1 class="form-title">Post a Question</h1>
       <form action="/questions" method="POST">
         <div class="form-field">
-          <label for="title" class="">Title</label>
-          <input type="text" name="title" id="title" class="w-full px-3 py-2 border rounded" required>
+          <label for="title" class="text-[#023E7D]">Title</label>
+          <input type="text" name="title" id="title" class="w-full px-3 py-2 border rounded border-[#5C677D]" required>
         </div>
         <div class="form-field">
-          <label for="description" class="">Description</label>
-          <textarea name="description" id="description" class="w-full px-3 py-2 border rounded-xl border border-orange-400"></textarea>
+          <label for="description" class="text-[#023E7D]">Description</label>
+          <textarea name="description" id="description" class="w-full px-3 py-2 border rounded-xl border-[#5C677D]"></textarea>
         </div>
         <div class="mb-4">
           <button type="submit" class="form-button transition-all duration-300 transform">Submit</button>
@@ -43,7 +52,7 @@
       </form>
     </div>
   </main>
-  <footer class="bg-orange-600 mt-4 p-1 text-center bottom-0 fixed left-0 right-0 w-screen shadow-lg">
+  <footer class="bg-[#0466C8] mt-4 p-1 text-center bottom-0 fixed left-0 right-0 w-screen shadow-lg">
     <p class="text-white">&copy 2024 CodeExchange. All rights reserved. Created by Saksham</p>
   </footer>
 </body>

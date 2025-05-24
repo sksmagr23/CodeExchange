@@ -3,24 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/fav.svg">
   <title>CodeExchange</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 text-gray-900 font-mono">
-  <header class="bg-orange-600 text-white px-2 py-2.5 shadow-xl static">
+<body class="bg-gradient-to-r from-[#84d2f6] to-[#edf6f9] text-gray-900 font-mono">
+  <header class="bg-[#0466C8] text-white px-2 py-2.5 shadow-xl static">
     <div class="container mx-auto">
         <h1 class="text-xl font-bold mb-1">CodeExchange</h1>
       <nav>
-        <a href="/" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Home</span></a>
-        <a href="/questions" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Questions</span></a>
+        <a href="/" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Home</span></a>
+        <a href="/questions" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Questions</span></a>
         <% if (user) { %>
-          <a href="/questions/ask" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Ask Question?</span></a>
-          <a href="/profile" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Profile</span></a>
-          <a href="/api/auth/logout" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Logout</span></a>
+          <a href="/questions/ask" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Ask Question?</span></a>
+          <a href="/profile" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Profile</span></a>
+          <a href="/api/auth/logout" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Logout</span></a>
         <% } else { %>
-          <a href="/login" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Login</span></a>
-          <a href="/register" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-orange-600 active:bg-orange-300 border border-white">Register</span></a>
+          <a href="/login" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Login</span></a>
+          <a href="/register" class="sm:mr-1 md:mr-3 text-md text-white transition-all ease duration-300 transform font-bold"><span class="px-1 py-0.5 rounded-md transition-all ease duration-300 transform hover:bg-white hover:text-[#0466C8] active:bg-[#5C677D] border border-white">Register</span></a>
         <% } %>
       </nav>
     </div>
@@ -28,22 +29,26 @@
   
   <main class="container card1 mx-auto my-4 rounded-xl mb-10">
     <div class="container mx-auto p-5">
-          <h1 class="text-4xl font-bold mb-4 text-center">Welcome to CodeExchange</h1>
-          <p class="text-lg mb-4 font-semibold text-orange-800">Your go-to platform for finding answers to your coding questions. Whether you're a beginner or a seasoned developer, you'll find the help you need here.</p>
-          <p class="text-lg mb-2 text-orange-800 font-semibold">Join our community of coders to share knowledge, solve problems, and advance your coding skills.</p>
-          <p class="text-orange-800"> Start by 
-            <a href="/questions/ask" class="text-blue-800 hover:text-red-400">Asking a Question</a>
-          </p>
+          <h1 class="text-4xl font-bold mb-4 text-center text-[#023E7D]">Welcome to CodeExchange</h1>
+          <p class="text-lg mb-4 font-semibold text-[#023E7D]">Your go-to platform for finding answers to your code related problems. Whether you're a beginner or a seasoned developer, you'll find the help you need here.</p>
+          <p class="text-lg mb-2 font-semibold text-[#023E7D]">Join our community of coders to share knowledge, solve problems, and advance your coding skills.</p>
+            <p class="text-[#023E7D]"> Start by 
+            <% if (user) { %>
+              <a href="/questions/ask" class="text-[#0466C8] hover:text-[#0353A4]">Asking a Question</a>
+            <% } else { %>
+              <a href="/login" class="text-[#0466C8] hover:text-[#0353A4]">Asking a Question</a>
+            <% } %>
+            </p>
     </div>
     <div class="container mx-auto px-6 py-8">
-        <h2 class="text-2xl font-bold mb-6">About CodeExchange</h2>
-        <p class="text-gray-800 mb-4">➤ CodeExchange is a collaborative platform for programmers to find answers to their coding questions. Whether you're working on web development, data science, machine learning, or any other programming discipline, our community is here to help.</p>
-        <p class="text-gray-800 mb-4">➤ Our mission is to build a comprehensive and reliable resource for developers to seek and share knowledge. We encourage participation and collaboration to make coding more accessible and enjoyable for everyone.</p>
-        <p class="text-gray-800 mb-4">➤ Join CodeExchange today to ask questions, provide answers, and become part of a growing community of developers dedicated to helping each other learn and grow.</p>
-        <p class="text-gray-800 mb-4">➤ To view the questions on our platform: <a href="/questions" class="text-blue-800 hover:text-red-400">Click here</a></p>
+        <h2 class="text-2xl font-bold mb-6 text-[#023E7D]">About CodeExchange</h2>
+        <p class="text-[#001233] mb-4">➤ CodeExchange is a collaborative platform for programmers to find answers to their coding questions. Whether you're working on web development, data science, machine learning, or any other programming discipline, our community is here to help.</p>
+        <p class="text-[#001233] mb-4">➤ Our mission is to build a comprehensive and reliable resource for developers to seek and share knowledge. We encourage participation and collaboration to make coding more accessible and enjoyable for everyone.</p>
+        <p class="text-[#001233] mb-4">➤ Join CodeExchange today to ask questions, provide answers, and become part of a growing community of developers dedicated to helping each other learn and grow.</p>
+        <p class="text-[#001233] mb-4">➤ To view the questions on our platform: <a href="/questions" class="text-[#0466C8] hover:text-[#0353A4]">Click here</a></p>
     </div>
   </main>
-  <footer class="bg-orange-600 mt-4 p-1 text-center bottom-0 fixed left-0 right-0 w-screen shadow-lg">
+  <footer class="bg-[#0466C8] mt-4 p-1 text-center bottom-0 fixed left-0 right-0 w-screen shadow-lg">
     <p class="text-white">&copy 2024 CodeExchange. All rights reserved. Created by Saksham</p>
   </footer>
 </body>

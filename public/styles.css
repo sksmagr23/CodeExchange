@@ -3,52 +3,57 @@
 }
 
 .card1 {
-  background: rgba(251, 248, 227, 0.4);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: rgba(125, 133, 151, 0.15);
+  box-shadow: 0 0 20px rgba(0, 18, 51, 0.4);
   background-blend-mode: hard-light;
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: rgba(217, 242, 255, 0.85);
+  box-shadow: 0 0 10px rgba(0, 18, 51, 0.3);
 }
 
 .form-container {
   max-width: 550px;
   margin: auto;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.8);
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 18, 51, 0.3);
 }
 
 .form-title {
   font-size: 2em;
   margin-bottom: 10px;
   text-align: center;
-  color: rgb(222, 104, 0);
+  color: #0466C8;
   font-weight: bold;
 }
+
 .form-field {
   margin-bottom: 15px;
 }
+
 .form-field label {
   display: block;
   font-weight: bold;
   margin-bottom: 4px;
+  color: #023E7D;
 }
+
 .form-field input {
   width: 100%;
   padding: 5px;
-  border: 1px solid #da926e;
+  border: 2px solid #5C677D;
   border-radius: 10px;
-  color: #472b1d;
+  color: #001233;
 }
+
 .form-button {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #e6540b;
+  background-color: #0279f0;
   color: white;
   font-size: 1em;
   font-weight: bold;
@@ -56,9 +61,11 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
 .form-button:hover {
-  background-color: #983402;
+  background-color: #0353A4;
 }
+
 .form-button:active {
-  background-color: #471904;
+  background-color: #023E7D;
 }
