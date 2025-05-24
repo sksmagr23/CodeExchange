@@ -3,12 +3,22 @@ const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 
 exports.createQuestion = async (req, res) => {
-  const { title, description } = req.body;
+  const { title, description, tags } = req.body;
 
   try {
+    let processedTags = [];
+    if (tags) {
+      processedTags = tags
+        .split(',')
+        .map(tag => tag.trim().toLowerCase())
+        .filter(tag => tag.length > 0)
+        .slice(0, 5);
+    }
+
     const question = new Question({
       title,
       description,
+      tags: processedTags,
       user: req.user._id,
     });
 
@@ -49,7 +59,7 @@ exports.getQuestionById = async (req, res) => {
 
 exports.renderQuestionPage = async (req, res) => {
   const question = await Question.findById(req.params.id).populate('user', 'username');
-  const answers = await Answer.find({ question: req.params.id }).populate('user', 'username');
+  const answers = await Answer.find({ question: req.params.id }).populate('user', 'username')
   if (question) {
     res.render('question', { title: 'Question', question, answers, user: req.user });
   } else {

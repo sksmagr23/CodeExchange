@@ -9,6 +9,12 @@ const questionSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  tags: [{
+    type: String,
+    lowercase: true,
+    trim: true,
+    maxlength: 20
+  }],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

@@ -41,6 +41,17 @@
     <% questions.forEach(question => { %>
       <div class="card px-4 py-3 rounded-2xl mb-4 transition-all duration-400 transform hover:scale-105 hover:bg-white">
         <h1 class="text-2xl font-bold mb-1 text-[#023E7D]"><%= question.title %></h1>
+        <% if (question.tags && question.tags.length > 0) { %>
+        <div class="mb-3">
+          <div class="flex flex-wrap gap-2">
+            <% question.tags.forEach(tag => { %>
+              <a href="/questions?tag=<%= tag %>" class="px-2.5 py-1 text-sm bg-[#0466C8] text-white rounded-2xl hover:bg-gray-800 transition-colors cursor-pointer">
+                <%= tag %>
+              </a>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
         <p class="text-sm text-[#5C677D] mb-2">— by <%= question.user.username %> on <%= new Date(question.createdAt).toLocaleString() %></p>
         <a href="/questions/<%= question._id %>" class="text-[#0466C8] hover:text-[#0353A4]">view more</a>
       </div>

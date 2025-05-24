@@ -32,16 +32,33 @@
         <h1 class="text-3xl font-bold mb-3 text-[#023E7D]"><%= question.title %></h1>
         <a href="/questions" class="text-lg text-white transition-all ease duration-300 transform font-bold"><span class="bg-[#023E7D] px-3 py-1 rounded-xl transition-all ease duration-300 transform hover:bg-[#002855] active:bg-[#001845] border border-white">Back</span></a>
       </div>
+      <% if (question.tags && question.tags.length > 0) { %>
+        <div class="mb-3">
+          <div class="flex flex-wrap gap-2">
+            <% question.tags.forEach(tag => { %>
+              <a href="/questions?tag=<%= tag %>" class="px-3 py-1 text-sm bg-[#0466C8] text-white rounded-2xl hover:bg-gray-800 transition-colors cursor-pointer">
+                <%= tag %>
+              </a>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
       <p class="text-[#001233] mb-2 text-lg"><%= question.description %></p>
       <p class="text-md text-[#5C677D] mb-4">-posted by <%= question.user.username %> on <%= new Date(question.createdAt).toLocaleString() %></p>
 
-      <h2 class="text-xl font-semibold mb-3 underline text-[#023E7D]">Answers</h2>
+      <h2 class="text-xl font-semibold mb-3 underline text-[#023E7D]">Answers (<%= answers.length %>)</h2>
+      <% if (answers.length === 0) { %>
+        <div class="mb-4 p-4 bg-gray-100 rounded-lg">
+          <p class="text-[#5C677D] text-center">No answers yet. Be the first to answer this question!</p>
+        </div>
+      <% } else { %>
       <% answers.forEach(answer => { %>
         <div class="mb-2.5">
           <p class="text-[#001233]">➤ <%= answer.text %></p>
           <p class="text-sm text-[#5C677D]">-by <%= answer.user.username %> on <%= new Date(answer.createdAt).toLocaleString() %></p>
         </div>
       <% }) %>
+      <% } %>
 
       <% if (user) { %>
         <form action="/questions/<%= question._id %>/answers" method="POST">
