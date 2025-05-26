@@ -15,9 +15,11 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/theme.css" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
       tailwind.config = {
+        darkMode: "class",
         theme: {
           extend: {
             fontFamily: {
@@ -60,6 +62,10 @@
               alt="Profile"
               class="w-9 h-9 rounded-full object-cover"
             />
+            <label class="switch" id="themeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
           </nav>
           <button
             id="mobileMenuButton"
@@ -88,6 +94,10 @@
             <a href="/api/auth/logout" class="mobile-nav-link">
               <i class="fas fa-sign-out-alt mr-2"></i> Logout
             </a>
+            <label class="switch" id="mobileThemeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
           </nav>
         </div>
       </div>
@@ -207,7 +217,7 @@
               </button>
               <a
                 href="/questions"
-                class="ml-3 inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0466C8] transition"
+                class="ml-3 inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-base font-medium bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0466C8] transition"
               >
                 Cancel
               </a>
@@ -248,7 +258,6 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Mobile menu code
         const mobileMenuButton = document.getElementById("mobileMenuButton");
         const mobileMenu = document.getElementById("mobileMenu");
         const hamburgerIcon = document.getElementById("hamburgerIcon");
@@ -265,20 +274,17 @@
           }
         });
 
-        // Markdown preview code
         const editTab = document.getElementById("editTab");
         const previewTab = document.getElementById("previewTab");
         const editArea = document.getElementById("editArea");
         const previewArea = document.getElementById("previewArea");
         const description = document.getElementById("description");
 
-        // Function to update preview content
         function updatePreview() {
           const markdownContent = description.value || "*No content yet*";
           previewArea.innerHTML = marked.parse(markdownContent);
         }
 
-        // Switch to edit mode
         editTab.addEventListener("click", function () {
           editTab.classList.add(
             "text-[#0466C8]",
@@ -297,7 +303,6 @@
           previewArea.classList.add("hidden");
         });
 
-        // Switch to preview mode
         previewTab.addEventListener("click", function () {
           previewTab.classList.add(
             "text-[#0466C8]",
@@ -315,10 +320,10 @@
           editArea.classList.add("hidden");
           previewArea.classList.remove("hidden");
 
-          // Update preview content
           updatePreview();
         });
       });
     </script>
+    <script src="/theme.js"></script>
   </body>
 </html>

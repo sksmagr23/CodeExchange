@@ -15,13 +15,18 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/theme.css" />
     <script>
       tailwind.config = {
+        darkMode: "class",
         theme: {
           extend: {
             fontFamily: {
               sans: ["Poppins", "sans-serif"],
               mono: ["Fira Code", "monospace"],
+            },
+            colors: {
+              accent: "#9ef01a",
             },
           },
         },
@@ -70,6 +75,11 @@
               Register
             </a>
             <% } %>
+
+            <label class="switch" id="themeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
           </nav>
           <button
             id="mobileMenuButton"
@@ -80,7 +90,10 @@
         </div>
       </div>
 
-      <div id="mobileMenu" class="md:hidden bg-[#0353A4] hidden">
+      <div
+        id="mobileMenu"
+        class="md:hidden bg-[#0353A4] dark:bg-gray-900 hidden"
+      >
         <div class="container mx-auto px-4 py-2">
           <nav class="flex flex-col space-y-2 pb-3">
             <a href="/" class="mobile-nav-link active">
@@ -108,6 +121,11 @@
               Register
             </a>
             <% } %>
+
+            <label class="switch" id="mobileThemeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
           </nav>
         </div>
       </div>
@@ -301,5 +319,6 @@
         });
       });
     </script>
+    <script src="/theme.js"></script>
   </body>
 </html>

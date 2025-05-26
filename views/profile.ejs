@@ -9,8 +9,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/theme.css">
   <script>
     tailwind.config = {
+      darkMode: "class",
       theme: {
         extend: {
           fontFamily: {
@@ -22,8 +24,7 @@
     }
   </script>
 </head>
-<body class="bg-gradient-to-br from-[#0466C8]/70 to-[#0353A4]/70  text-gray-800 font-sans min-h-screen flex flex-col">
-  <!-- Navigation bar -->
+<body class="bg-gradient-to-br from-[#f8fafc] to-[#e0f2fe] text-gray-800 font-sans min-h-screen flex flex-col">
   <header class="bg-[#0466C8] text-white shadow-lg sticky top-0 z-50">
     <div class="container mx-auto px-0 py-3">
       <div class="flex justify-between items-center">
@@ -52,6 +53,10 @@
               alt="Profile"
               class="w-9 h-9 rounded-full object-cover"
             />
+          <label class="switch" id="themeToggle">
+            <input type="checkbox" />
+            <span class="slider"></span>
+          </label>
         </nav>
         <button id="mobileMenuButton" class="md:hidden text-white text-xl p-2 focus:outline-none">
           <i id="hamburgerIcon" class="fas fa-bars"></i>
@@ -77,6 +82,10 @@
           <a href="/api/auth/logout" class="mobile-nav-link">
             <i class="fas fa-sign-out-alt mr-2"></i> Logout
           </a>
+          <label class="switch" id="mobileThemeToggle">
+            <input type="checkbox" />
+            <span class="slider"></span>
+          </label>
         </nav>
       </div>
     </div>
@@ -198,7 +207,7 @@
                       <i class="far fa-calendar-alt mr-1"></i>
                       <span>Answered on <%= new Date(answer.createdAt).toLocaleString() %></span>
                     </div>
-                    <div class="mt-2 md:mt-0">
+                    <div class="mt-2 md:mt-0 ml-1">
                       <span>In response to: </span>
                       <a href="/questions/<%= answer.question._id %>" class="text-[#0466C8] font-medium hover:text-[#0353A4]">
                         <%= answer.question.title %>
@@ -319,5 +328,6 @@
       });
     });
   </script>
+  <script src="/theme.js"></script>
 </body>
 </html>

@@ -9,8 +9,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/theme.css">
   <script>
     tailwind.config = {
+      darkMode: "class",
       theme: {
         extend: {
           fontFamily: {
@@ -52,6 +54,10 @@
               alt="Profile"
               class="w-9 h-9 rounded-full object-cover"
             />
+            <label class="switch" id="themeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
           <% } else { %>
             <a href="/login" class="nav-link">
               <i class="fas fa-sign-in-alt mr-1"></i> Login
@@ -59,7 +65,11 @@
             <a href="/register" class="nav-link">
               <i class="fas fa-user-plus mr-1"></i>
               Register
-          </a>
+            </a>
+            <label class="switch" id="themeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
           <% } %>
         </nav>
 
@@ -88,6 +98,10 @@
             <a href="/api/auth/logout" class="mobile-nav-link">
               <i class="fas fa-sign-out-alt mr-2"></i> Logout
             </a>
+            <label class="switch" id="mobileThemeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
           <% } else { %>
             <a href="/login" class="mobile-nav-link">
               <i class="fas fa-sign-in-alt mr-2"></i> Login
@@ -95,6 +109,10 @@
             <a href="/register" class="mobile-nav-link">
               <i class="fas fa-user-plus mr-2"></i> Register
             </a>
+            <label class="switch" id="mobileThemeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
           <% } %>
         </nav>
       </div>
@@ -225,5 +243,6 @@
       });
     });
   </script>
+  <script src="/theme.js"></script>
 </body>
 </html>
