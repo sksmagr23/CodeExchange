@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/fav.svg">
+  <title><%= title %> - CodeExchange</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/theme.css">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-br from-[#f8fafc] to-[#e0f2fe] text-gray-800 font-sans min-h-screen flex flex-col">
+  <header class="bg-[#0466C8] text-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-0 py-3">
+      <div class="flex justify-between items-center mx-2 md:mx-0">
+        <div class="flex items-center">
+          <i class="fas fa-code text-xl mr-2"></i>
+          <h1 class="text-2xl font-bold font-mono">CodeExchange</h1>
+        </div>
+        <nav class="hidden md:flex items-center space-x-4">
+          <a href="/" class="nav-link">
+            <i class="fas fa-home mr-1"></i> Home
+          </a>
+          <a href="/questions" class="nav-link">
+            <i class="fas fa-question-circle mr-1"></i> Questions
+          </a>
+          <a href="/stackoverflow/search" class="nav-link active">
+            <i class="fab fa-stack-overflow mr-1"></i> Stack
+          </a>
+          <% if (user) { %>
+            <a href="/questions/ask" class="nav-link">
+              <i class="fas fa-pen mr-1"></i> Ask
+            </a>
+            <a href="/api/auth/logout" class="nav-link">
+              <i class="fas fa-sign-out-alt mr-1"></i> Logout
+            </a>
+            <a href="/profile" class="nav-link">
+            <img
+              src="<%= user.profilePicture || '/avatar.png' %>"
+              alt="Profile"
+              class="w-9 h-9 rounded-full object-cover"
+            /></a>
+            <label class="switch" id="themeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          <% } else { %>
+            <a href="/login" class="nav-link">
+              <i class="fas fa-sign-in-alt mr-1"></i> Login
+            </a>
+            <a href="/register" class="nav-link">
+              <i class="fas fa-user-plus mr-1"></i>
+              Register
+            </a>
+            <label class="switch" id="themeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          <% } %>
+        </nav>
+        
+        <button id="mobileMenuButton" class="md:hidden text-white text-xl p-2 focus:outline-none">
+          <i id="hamburgerIcon" class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="md:hidden bg-[#0353A4] hidden">
+      <div class="container mx-auto px-4 py-2">
+        <nav class="flex flex-col space-y-2 pb-3">
+          <a href="/" class="mobile-nav-link">
+            <i class="fas fa-home mr-2"></i> Home
+          </a>
+          <a href="/questions" class="mobile-nav-link">
+            <i class="fas fa-question-circle mr-2"></i> Questions
+          </a>
+          <a href="/stackoverflow/search" class="mobile-nav-link active">
+            <i class="fab fa-stack-overflow mr-2"></i> Stack
+          </a>
+          <% if (user) { %>
+            <a href="/questions/ask" class="mobile-nav-link">
+              <i class="fas fa-pen mr-2"></i> Ask
+            </a>
+            <a href="/profile" class="mobile-nav-link">
+              <i class="fas fa-user mr-2"></i> Profile
+            </a>
+            <a href="/api/auth/logout" class="mobile-nav-link">
+              <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+            <label class="switch" id="mobileThemeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          <% } else { %>
+            <a href="/login" class="mobile-nav-link">
+              <i class="fas fa-sign-in-alt mr-2"></i> Login
+            </a>
+            <a href="/register" class="mobile-nav-link">
+              <i class="fas fa-user-plus mr-2"></i> Register
+            </a>
+            <label class="switch" id="mobileThemeToggle">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          <% } %>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+        <div class="bg-gradient-to-r from-[#0466C8] to-[#0353A4] p-4">
+          <div class="flex flex-wrap justify-between items-center">
+            <h1 class="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-0 break-words w-full sm:w-auto">
+              <%= question.title %>
+            </h1>
+            <a
+              href="/stackoverflow/search"
+              class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-1.5 rounded-md transition flex items-center text-sm whitespace-nowrap"
+            >
+              <i class="fas fa-arrow-left mr-1"></i> Back
+            </a>
+          </div>
+        </div>
+
+        <div class="p-4 md:p-6">
+          <div class="flex flex-col sm:flex-row items-start">
+            <div class="mb-4 sm:mb-0 sm:mr-4 flex sm:flex-col items-center sm:items-center sm:text-center">
+              <div class="text-2xl font-semibold text-[#0466C8]"><%= question.score %></div>
+              <div class="text-xs text-gray-500 ml-1 sm:ml-0">votes</div>
+              <div class="ml-3 sm:ml-0 mt-0 sm:mt-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-md">
+                <%= question.answer_count %> answers
+              </div>
+              <div class="ml-3 sm:ml-0 mt-0 sm:mt-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-md whitespace-nowrap">
+                <%= question.view_count %> views
+              </div>
+            </div>
+            
+            <div class="flex-1 w-full">
+              <div class="mb-4">
+                <div class="flex flex-wrap gap-2">
+                  <% question.tags.forEach(tag => { %>
+                    <a href="/stackoverflow/search?tags=<%= tag %>" class="px-3 py-1 text-sm bg-blue-100 text-[#0466C8] rounded-full hover:bg-blue-200 transition-colors whitespace-nowrap">
+                      <%= tag %>
+                    </a>
+                  <% }) %>
+                </div>
+              </div>
+
+              <div class="bg-gray-50 p-4 rounded-lg mb-4 overflow-hidden">
+                <div class="text-gray-800 markdown-content">
+                  <%- question.body %>
+                </div>
+              </div>
+
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center text-sm text-gray-500 gap-2 sm:gap-0">
+                <div class="flex items-center">
+                  <img src="<%= question.owner.profile_image || '/avatar.png' %>" alt="User" class="w-6 h-6 rounded-full mr-1">
+                  <span><%= question.owner.display_name %></span>
+                </div>
+                <div class="flex items-center">
+                  <i class="far fa-clock mr-1"></i>
+                  <span><%= new Date(question.creation_date * 1000).toLocaleString() %></span>
+                </div>
+                <a href="<%= question.link %>" target="_blank" class="text-[#0466C8] hover:text-[#0353A4] whitespace-nowrap">
+                  View on Stack Overflow <i class="fas fa-external-link-alt ml-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+        <div class="bg-gray-50 border-b p-4">
+          <h2 class="text-xl font-semibold text-[#023E7D] flex items-center">
+            <i class="fas fa-comments mr-2"></i>
+            Answers (<%= answers.length %>)
+          </h2>
+        </div>
+
+        <div class="divide-y divide-gray-100">
+          <% if (answers.length === 0) { %>
+            <div class="p-8 text-center">
+              <div class="text-gray-400 mb-3">
+                <i class="fas fa-comments text-4xl"></i>
+              </div>
+              <p class="text-gray-600">
+                No answers available for this question on Stack Overflow.
+              </p>
+            </div>
+          <% } else { %>
+            <% answers.forEach(answer => { %>
+              <div class="p-4 md:p-5 hover:bg-gray-50">
+                <div class="flex flex-col sm:flex-row items-start">
+                  <div class="mb-4 sm:mb-0 sm:mr-4 flex sm:flex-col items-center sm:items-center sm:text-center">
+                    <div class="text-xl font-semibold text-[#0466C8]"><%= answer.score %></div>
+                    <div class="text-xs text-gray-500 ml-1 sm:ml-0">votes</div>
+                    <% if (answer.is_accepted) { %>
+                      <div class="ml-3 sm:ml-0 mt-0 sm:mt-2 px-2 py-1 bg-green-500 text-white text-xs rounded-md">
+                        <i class="fas fa-check mr-1"></i> Accepted
+                      </div>
+                    <% } %>
+                  </div>
+                  
+                  <div class="flex-1 w-full">
+                    <div class="bg-gray-50 p-4 rounded-lg mb-3 overflow-hidden">
+                      <div class="markdown-content">
+                        <%- answer.body %>
+                      </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center text-sm text-gray-500 gap-2 sm:gap-0">
+                      <div class="flex items-center">
+                        <img src="<%= answer.owner.profile_image || '/avatar.png' %>" alt="User" class="w-6 h-6 rounded-full mr-1">
+                        <span><%= answer.owner.display_name %></span>
+                      </div>
+                      <div class="flex items-center">
+                        <i class="far fa-clock mr-1"></i>
+                        <span><%= new Date(answer.creation_date * 1000).toLocaleString() %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-[#023E7D] py-6 text-white mt-auto">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0 flex items-center">
+          <i class="fas fa-code text-xl mr-2"></i>
+          <span class="font-mono font-bold text-lg">CodeExchange</span>
+        </div>
+        <div class="mb-4 md:mb-0 text-sm text-gray-200">
+          &copy; 2024 CodeExchange. All rights reserved. Created by Saksham
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    .nav-link {
+      @apply px-3 py-2 rounded-md hover:bg-white hover:bg-opacity-10 transition;
+    }
+    .nav-link.active {
+      @apply bg-white bg-opacity-10;
+    }
+    .mobile-nav-link {
+      @apply px-3 py-2.5 rounded-md hover:bg-white hover:bg-opacity-10 transition flex items-center;
+    }
+    .mobile-nav-link.active {
+      @apply bg-white bg-opacity-10;
+    }
+    .markdown-content {
+      @apply w-full overflow-hidden;
+      word-wrap: break-word;
+    }
+    
+    .markdown-content pre {
+      @apply bg-gray-100 p-3 rounded-md my-3 overflow-x-auto whitespace-pre-wrap break-words;
+      max-width: 100%;
+    }
+    
+    .markdown-content code {
+      @apply font-mono text-sm px-1.5 py-0.5 bg-gray-100 rounded;
+    }
+    
+    .markdown-content pre code {
+      @apply bg-transparent p-0;
+      white-space: pre;
+    }
+    
+    .markdown-content p {
+      @apply my-2;
+    }
+    
+    .markdown-content h1, 
+    .markdown-content h2, 
+    .markdown-content h3, 
+    .markdown-content h4 {
+      @apply font-bold my-3;
+    }
+    
+    .markdown-content ul, 
+    .markdown-content ol {
+      @apply pl-5 my-3;
+    }
+    
+    .markdown-content ul {
+      @apply list-disc;
+    }
+    
+    .markdown-content ol {
+      @apply list-decimal;
+    }
+    
+    .markdown-content img {
+      @apply max-w-full h-auto my-3;
+    }
+    
+    .markdown-content table {
+      @apply w-full border-collapse my-3 overflow-x-auto block;
+    }
+    
+    .markdown-content th, 
+    .markdown-content td {
+      @apply border border-gray-300 p-2;
+    }
+    
+    .markdown-content blockquote {
+      @apply pl-4 border-l-4 border-gray-300 italic my-3;
+    }
+    
+    @media (max-width: 640px) {
+      .markdown-content pre {
+        font-size: 0.85rem;
+      }
+      
+      .markdown-content table {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuButton = document.getElementById('mobileMenuButton');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const hamburgerIcon = document.getElementById('hamburgerIcon');
+      
+      mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+        
+        if (hamburgerIcon.classList.contains('fa-bars')) {
+          hamburgerIcon.classList.remove('fa-bars');
+          hamburgerIcon.classList.add('fa-times');
+        } else {
+          hamburgerIcon.classList.remove('fa-times');
+          hamburgerIcon.classList.add('fa-bars');
+        }
+      });
+      document.querySelectorAll('.markdown-content pre code').forEach(block => {
+        if (block.scrollWidth > block.clientWidth) {
+          block.parentElement.classList.add('has-scroll');
+        }
+      });
+    });
+  </script>
+  <script src="/theme.js"></script>
+</body>
+</html>

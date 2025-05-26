@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/fav.svg">
-  <title><%= title %></title>
+  <title><%= title %> - CodeExchange</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
@@ -32,16 +32,16 @@
           <i class="fas fa-code text-xl mr-2"></i>
           <h1 class="text-2xl font-bold font-mono">CodeExchange</h1>
         </div>
-        <nav class="hidden items-center md:flex space-x-4">
+        <nav class="hidden md:flex items-center space-x-4">
           <a href="/" class="nav-link">
             <i class="fas fa-home mr-1"></i> Home
           </a>
-          <a href="/questions" class="nav-link active">
+          <a href="/questions" class="nav-link">
             <i class="fas fa-question-circle mr-1"></i> Questions
           </a>
-          <a href="/stackoverflow/search" class="nav-link">
-              <i class="fab fa-stack-overflow mr-1"></i> Stack
-            </a>
+          <a href="/stackoverflow/search" class="nav-link active">
+            <i class="fab fa-stack-overflow mr-1"></i> Stack
+          </a>
           <% if (user) { %>
             <a href="/questions/ask" class="nav-link">
               <i class="fas fa-pen mr-1"></i> Ask
@@ -64,8 +64,7 @@
               <i class="fas fa-sign-in-alt mr-1"></i> Login
             </a>
             <a href="/register" class="nav-link">
-              <i class="fas fa-user-plus mr-1"></i>
-              Register
+              <i class="fas fa-user-plus mr-1"></i> Register
             </a>
             <label class="switch" id="themeToggle">
               <input type="checkbox" />
@@ -73,7 +72,7 @@
             </label>
           <% } %>
         </nav>
-
+        
         <button id="mobileMenuButton" class="md:hidden text-white text-xl p-2 focus:outline-none">
           <i id="hamburgerIcon" class="fas fa-bars"></i>
         </button>
@@ -86,12 +85,12 @@
           <a href="/" class="mobile-nav-link">
             <i class="fas fa-home mr-2"></i> Home
           </a>
-          <a href="/questions" class="mobile-nav-link active">
+          <a href="/questions" class="mobile-nav-link">
             <i class="fas fa-question-circle mr-2"></i> Questions
           </a>
-          <a href="/stackoverflow/search" class="mobile-nav-link">
-              <i class="fab fa-stack-overflow mr-2"></i> Stack
-            </a>
+          <a href="/stackoverflow/search" class="mobile-nav-link active">
+            <i class="fab fa-stack-overflow mr-2"></i> Stack
+          </a>
           <% if (user) { %>
             <a href="/questions/ask" class="mobile-nav-link">
               <i class="fas fa-pen mr-2"></i> Ask
@@ -125,77 +124,120 @@
 
   <main class="flex-grow container mx-auto px-4 py-8">
     <div class="max-w-5xl mx-auto">
-      <div class="flex justify-between items-center mb-8">
-        <h1 class="text-2xl md:text-3xl font-bold text-[#023E7D]">
-          <i class="fas fa-question-circle mr-2"></i> Questions
+      <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+        <h1 class="text-2xl md:text-3xl font-bold text-[#023E7D] mb-4 md:mb-0">
+          <i class="fab fa-stack-overflow mr-2"></i> Stack Overflow Questions
         </h1>
-        
-        <% if (user) { %>
-          <a href="/questions/ask" class="inline-flex items-center px-4 py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition shadow-md">
-            <i class="fas fa-plus mr-2"></i> Ask Question
-          </a>
-        <% } %>
       </div>
       
-      <div class="space-y-6">
-        <% questions.forEach(question => { %>
-          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
-            <div class="p-6">
-              <h2 class="text-xl font-semibold text-[#023E7D] mb-2">
-                <a href="/questions/<%= question._id %>" class="hover:text-[#0466C8]">
-                  <%= question.title %>
-                </a>
-              </h2>
-              
-              <div class="flex flex-wrap gap-2 mb-3">
-                <% if (question.tags && question.tags.length > 0) { %>
-                  <% question.tags.forEach(tag => { %>
-                    <a href="/questions?tag=<%= tag %>" class="px-3 py-1 text-sm bg-blue-100 text-[#0466C8] rounded-full hover:bg-blue-200 transition-colors">
-                      <%= tag %>
-                    </a>
-                  <% }) %>
-                <% } %>
-              </div>
-              
-              <div class="flex items-center text-gray-500 text-sm">
-                <div class="flex items-center mr-4">
-                  <i class="fas fa-user mr-1"></i>
-                  <span><%= question.user.username %></span>
-                </div>
-                <div class="flex items-center">
-                  <i class="far fa-clock mr-1"></i>
-                  <span><%= new Date(question.createdAt).toLocaleString() %></span>
-                </div>
-                
-                <div class="ml-auto">
-                  <a href="/questions/<%= question._id %>" class="text-[#0466C8] hover:text-[#0353A4] flex items-center">
-                    View Question <i class="fas fa-chevron-right text-xs ml-1"></i>
-                  </a>
+      <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+        <form action="/stackoverflow/search" method="GET" class="space-y-4">
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <label for="query" class="block text-gray-700 font-medium mb-2">Keyword Search</label>
+        <input
+          type="text"
+          id="query"
+          name="query"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8]"
+          placeholder="Search using title keywords"
+          value="<%= locals.query || '' %>"
+        />
+      </div>
+      <div>
+        <label for="tags" class="block text-gray-700 font-medium mb-2">Tags</label>
+        <input
+          type="text"
+          id="tags"
+          name="tags"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8]"
+          placeholder="Enter tags separated by commas (e.g., javascript,react,node.js)"
+          value="<%= locals.tags || '' %>"
+        />
+      </div>
+    </div>
+    <div class="flex sm:justify-between items-center">
+      <button
+        type="submit"
+        class="px-6 py-2 bg-[#0466C8] text-white rounded-md hover:bg-[#0353A4] transition shadow-md sm:w-auto"
+      >
+        <i class="fas fa-search mr-2"></i> Search
+      </button>
+    </div>
+  </form>
+      </div>
+      
+      <% if (locals.results && results.length > 0) { %>
+        <div class="mb-4">
+          <p class="text-gray-600">Showing <%= results.length %> results</p>
+        </div>
+        
+        <div class="space-y-6">
+          <% results.forEach(question => { %>
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+              <div class="p-6">
+                <div class="flex items-start">
+                  <div class="mr-4 text-center">
+                    <div class="text-xl font-semibold text-[#0466C8]"><%= question.score %></div>
+                    <div class="text-xs text-gray-500">votes</div>
+                    <div class="mt-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-md">
+                      <%= question.answer_count %> answers
+                    </div>
+                  </div>
+                  <div class="flex-1">
+                    <h2 class="text-xl font-semibold text-[#023E7D] mb-2">
+                      <a href="/stackoverflow/question/<%= question.question_id %>" class="hover:text-[#0466C8]">
+                        <%= question.title %>
+                      </a>
+                    </h2>
+                    
+                    <div class="flex flex-wrap gap-2 mb-3">
+                      <% question.tags.forEach(tag => { %>
+                        <a href="/stackoverflow/search?tags=<%= tag %>" class="px-3 py-1 text-xs bg-blue-100 text-[#0466C8] rounded-full hover:bg-blue-200 transition-colors">
+                          <%= tag %>
+                        </a>
+                      <% }) %>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-gray-500 text-sm">
+                      <div class="flex items-center">
+                        <div class="flex items-center mr-4">
+                          <img src="<%= question.owner.profile_image || '/avatar.png' %>" alt="User" class="w-6 h-6 rounded-full mr-1">
+                          <span><%= question.owner.display_name %></span>
+                        </div>
+                        <div class="flex items-center">
+                          <i class="far fa-clock mr-1"></i>
+                          <span><%= new Date(question.creation_date * 1000).toLocaleDateString() %></span>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <% }) %>
-
-        <% if (questions.length === 0) { %>
-          <div class="bg-white rounded-xl shadow-md p-8 text-center">
-            <div class="text-gray-400 mb-4">
-              <i class="fas fa-question-circle text-5xl"></i>
-            </div>
-            <h3 class="text-xl font-medium text-gray-700 mb-2">No questions found</h3>
-            <p class="text-gray-500">Be the first to ask a question!</p>
-            <% if (user) { %>
-              <a href="/questions/ask" class="inline-block mt-6 px-6 py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition">
-                Ask a Question
-              </a>
-            <% } else { %>
-              <a href="/login" class="inline-block mt-6 px-6 py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition">
-                Login to Ask
-              </a>
-            <% } %>
+          <% }) %>
+        </div>
+        
+        <% if (locals.hasMore) { %>
+          <div class="mt-8 flex justify-center">
+            <a 
+              href="/stackoverflow/search?query=<%= locals.query || '' %>&tags=<%= locals.tags || '' %>&page=<%= currentPage + 1 %>" 
+              class="px-6 py-2 bg-[#0466C8] text-white rounded-md hover:bg-[#0353A4] transition shadow-md"
+            >
+              Load more results
+            </a>
           </div>
         <% } %>
-      </div>
+      <% } else if (locals.results) { %>
+        <div class="bg-white rounded-xl shadow-md p-8 text-center">
+          <div class="text-gray-400 mb-4">
+            <i class="fas fa-search text-5xl"></i>
+          </div>
+          <h3 class="text-xl font-medium text-gray-700 mb-2">No results found</h3>
+          <p class="text-gray-500">Try different keywords or tags</p>
+        </div>
+      <% } %>
     </div>
   </main>
 

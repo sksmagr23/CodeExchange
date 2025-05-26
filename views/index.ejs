@@ -38,34 +38,31 @@
   >
     <header class="bg-[#0466C8] text-white shadow-lg sticky top-0 z-50">
       <div class="container mx-auto px-0 py-3">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center mx-2 md:mx-0">
           <div class="flex items-center">
             <i class="fas fa-code text-xl mr-2"></i>
             <h1 class="text-2xl font-bold font-mono">CodeExchange</h1>
           </div>
-          <nav class="hidden md:flex items-center space-x-6">
-            <a href="/" class="nav-link active">
-              <i class="fas fa-home mr-1"></i> Home
-            </a>
+          <nav class="hidden md:flex items-center space-x-5">
             <a href="/questions" class="nav-link">
               <i class="fas fa-question-circle mr-1"></i> Questions
+            </a>
+            <a href="/stackoverflow/search" class="nav-link">
+              <i class="fab fa-stack-overflow mr-1"></i> Stack
             </a>
             <% if (user) { %>
             <a href="/questions/ask" class="nav-link">
               <i class="fas fa-pen mr-1"></i> Ask
             </a>
-
-            <a href="/profile" class="nav-link">
-              <i class="fas fa-user mr-1"></i> Profile
-            </a>
             <a href="/api/auth/logout" class="nav-link">
               <i class="fas fa-sign-out-alt mr-1"></i> Logout
             </a>
+            <a href="/profile" class="nav-link">
             <img
               src="<%= user.profilePicture || '/avatar.png' %>"
               alt="Profile"
               class="w-9 h-9 rounded-full object-cover"
-            />
+            /></a>
             <% } else { %>
             <a href="/login" class="nav-link">
               <i class="fas fa-sign-in-alt mr-1"></i> Login
@@ -96,11 +93,11 @@
       >
         <div class="container mx-auto px-4 py-2">
           <nav class="flex flex-col space-y-2 pb-3">
-            <a href="/" class="mobile-nav-link active">
-              <i class="fas fa-home mr-2"></i> Home
-            </a>
             <a href="/questions" class="mobile-nav-link">
               <i class="fas fa-question-circle mr-2"></i> Questions
+            </a>
+             <a href="/stackoverflow/search" class="mobile-nav-link">
+              <i class="fab fa-stack-overflow mr-2"></i> Stack
             </a>
             <% if (user) { %>
             <a href="/questions/ask" class="mobile-nav-link">
@@ -140,8 +137,7 @@
             Share Knowledge.<br />Get Answers.
           </h1>
           <p class="text-lg mb-8 opacity-90">
-            Your go-to platform for finding solutions to coding problems. Join
-            our community of developers learning and growing together.
+            Your go-to platform for finding solutions to coding problems. Join the community of developers learning and growing together.
           </p>
           <div class="flex space-x-4">
             <% if (user) { %>
@@ -202,7 +198,7 @@
               <h3 class="text-xl font-semibold mb-3">Community Powered</h3>
               <p class="text-gray-600">
                 Join thousands of developers helping each other solve coding
-                challenges daily.
+                challenges everytime.
               </p>
             </div>
 
@@ -221,20 +217,15 @@
               </p>
             </div>
 
-            <div
-              class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition"
-            >
-              <div
-                class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"
-              >
-                <i class="fas fa-bolt text-[#0466C8] text-xl"></i>
-              </div>
-              <h3 class="text-xl font-semibold mb-3">Fast Solutions</h3>
-              <p class="text-gray-600">
-                Get quick responses from experts to unblock your development
-                process.
-              </p>
-            </div>
+            <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+      <i class="fab fa-stack-overflow text-[#0466C8] text-xl"></i>
+    </div>
+    <h3 class="text-xl font-semibold mb-3">Stack Overflow Integration</h3>
+    <p class="text-gray-600">
+      Search and access Stack Overflow questions and answers directly within our platform.
+    </p>
+  </div>
           </div>
         </div>
       </section>
@@ -259,6 +250,12 @@
               seek and share knowledge. We encourage participation and
               collaboration to make coding more accessible and enjoyable for
               everyone.
+            </p>
+            <p class="text-gray-700 mb-4">
+              <span class="font-medium text-[#0466C8]">➤</span> With our Stack Overflow integration,
+              you can search and browse questions from the world's largest programming Q&A platform
+              without leaving CodeExchange. Get the best of both worlds - our app's personalized
+              help and Stack Overflow's vast knowledge base.
             </p>
             <p class="text-gray-700 mb-4">
               <span class="font-medium text-[#0466C8]">➤</span> Join

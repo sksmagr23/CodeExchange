@@ -9,6 +9,7 @@ A simplified web application that replicates core functionalities of Stack Overf
 - Basic user profiles with personal asked questions and answer given
 - User can ask questions, answer others questions, delete their own questions and answers
 - List all questions and view details of each question
+- ```Stack Overflow API integration``` - search and display questions and answers from Stack Overflow
 - Tailwind CSS for styling
 - Dark/Light theme toggle with persistent user preference
 - Markdown support for questions
@@ -18,6 +19,7 @@ A simplified web application that replicates core functionalities of Stack Overf
 - *Frontend*: EJS, Tailwind CSS
 - *Backend*: Node.js, Express.js, Mongoose
 - *Database*: MongoDB
+- *External API*: Stack Exchange API (for Stack Overflow integration)
 
 ## Installation and setup
 

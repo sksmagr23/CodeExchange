@@ -13,6 +13,7 @@ const { getUserProfile } = require('./controllers/userController')
 const passport = require('./config/passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const stackoverflowRoutes = require('./routes/stackoverflowRoutes');
 
 dotenv.config();
 
@@ -50,6 +51,7 @@ app.use(authMiddleware);
 app.use('/api/auth', authRoutes);
 app.use('/questions', questionRoutes);
 app.use('/api/users', userRoutes);
+app.use('/stackoverflow', stackoverflowRoutes);
 
 app.get('/', async (req, res) => {
   const questions = await Question.find().populate('user', 'username');
