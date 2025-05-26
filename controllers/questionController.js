@@ -146,3 +146,49 @@ exports.deleteAnswer = async (req, res) => {
     res.status(500).json({ message: 'Error deleting answer' });
   }
 };
+
+exports.updateQuestion = async (req, res) => {
+  try {
+    const question = await Question.findById(req.params.id);
+    
+    if (!question) {
+      return res.status(404).json({ message: 'Question not found' });
+    }
+    if (question.user.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: 'Not authorized to edit this question' });
+    }
+    
+    question.description = req.body.description;
+    await question.save();
+    res.json({ 
+      message: 'Question updated successfully',
+      question
+    });
+  } catch (error) {
+    console.error('Error updating question:', error);
+    res.status(500).json({ message: 'Error updating question' });
+  }
+};
+
+exports.updateAnswer = async (req, res) => {
+  try {
+    const answer = await Answer.findById(req.params.answerId);
+    
+    if (!answer) {
+      return res.status(404).json({ message: 'Answer not found' });
+    }
+    if (answer.user.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: 'Not authorized to edit this answer' });
+    }
+    
+    answer.text = req.body.text;
+    await answer.save();
+    res.json({ 
+      message: 'Answer updated successfully',
+      answer
+    });
+  } catch (error) {
+    console.error('Error updating answer:', error);
+    res.status(500).json({ message: 'Error updating answer' });
+  }
+};

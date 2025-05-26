@@ -6,6 +6,18 @@
   <link rel="icon" type="image/svg+xml" href="/fav.svg">
   <title><%= title %> - CodeExchange</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+  (function() {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    if (savedTheme === "dark" || (savedTheme !== "light" && prefersDark)) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  })();
+</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
@@ -156,10 +168,16 @@
         />
       </div>
     </div>
-    <div class="flex sm:justify-between items-center">
+    <div class="flex flex-col sm:flex-row sm:justify-between items-center">
+      <div class="mb-4 sm:mb-0">
+        <p class="text-sm text-gray-600">
+          <i class="fas fa-info-circle text-[#0466C8] mr-1"></i>
+          You can search by keywords, tags, or both
+        </p>
+      </div>
       <button
         type="submit"
-        class="px-6 py-2 bg-[#0466C8] text-white rounded-md hover:bg-[#0353A4] transition shadow-md sm:w-auto"
+        class="px-6 py-2 bg-[#0466C8] text-white rounded-md hover:bg-[#0353A4] transition shadow-md w-full sm:w-auto"
       >
         <i class="fas fa-search mr-2"></i> Search
       </button>

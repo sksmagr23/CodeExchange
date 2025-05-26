@@ -2,7 +2,7 @@ const axios = require("axios");
 
 exports.searchStackOverflowQuestions = async (req, res) => {
   try {
-    const { query, tags, page = 2, pagesize = 100 } = req.query;
+    const { query, tags, page = 1, pagesize = 100 } = req.query;
 
     const params = {
       site: "stackoverflow",
@@ -14,7 +14,11 @@ exports.searchStackOverflowQuestions = async (req, res) => {
     };
     
     if (query && query.trim() !== '') {
-      params.intitle = query.trim();
+      const words = query.trim().split(/\s+/).filter(word => word.length > 0);
+      
+      if (words.length > 0) {
+        params.intitle = words.join(' OR ');
+      }
     }
 
     if (tags && tags.trim() !== '') {
@@ -35,18 +39,24 @@ exports.searchStackOverflowQuestions = async (req, res) => {
     res.render("stackoverflow-search", {
       title: "Stack Overflow Search",
       user: req.user,
-      results: response.data.items,
+      results: response.data.items || [],
       query,
       tags,
       currentPage: parseInt(page),
-      hasMore: response.data.has_more,
-      totalResults: response.data.items.length,
+      hasMore: response.data.has_more || false,
+      totalResults: (response.data.items || []).length,
     });
   } catch (error) {
-    console.error("Error searching Stack Overflow:", error);
-    res.status(500).render("error", {
-      message: "Error fetching data from Stack Overflow",
+    res.render("stackoverflow-search", {
+      title: "Stack Overflow Search",
       user: req.user,
+      results: [],
+      query: req.query.query || "",
+      tags: req.query.tags || "",
+      currentPage: parseInt(req.query.page || 1),
+      hasMore: false,
+      totalResults: 0,
+      error: "Failed to fetch results. Please try again."
     });
   }
 };
@@ -65,6 +75,10 @@ exports.getStackOverflowQuestion = async (req, res) => {
       }
     );
 
+    if (!questionResponse.data.items || questionResponse.data.items.length === 0) {
+      return res.redirect('/stackoverflow/search');
+    }
+
     const answersResponse = await axios.get(
       `https://api.stackexchange.com/2.3/questions/${id}/answers`,
       {
@@ -77,27 +91,13 @@ exports.getStackOverflowQuestion = async (req, res) => {
       }
     );
 
-    if (
-      !questionResponse.data.items ||
-      questionResponse.data.items.length === 0
-    ) {
-      return res.status(404).render("404", {
-        title: "Question not found",
-        user: req.user,
-      });
-    }
-
     res.render("stackoverflow-question", {
       title: "Stack Overflow Question",
       user: req.user,
       question: questionResponse.data.items[0],
-      answers: answersResponse.data.items,
+      answers: answersResponse.data.items || [],
     });
   } catch (error) {
-    console.error("Error fetching Stack Overflow question:", error);
-    res.status(500).render("error", {
-      message: "Error fetching data from Stack Overflow",
-      user: req.user,
-    });
+    res.redirect('/stackoverflow/search');
   }
 };

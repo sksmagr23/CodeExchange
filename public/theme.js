@@ -6,21 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const themeCheckbox = themeToggle ? themeToggle.querySelector("input[type='checkbox']") : null;
   const mobileThemeCheckbox = mobileThemeToggle ? mobileThemeToggle.querySelector("input[type='checkbox']") : null;
 
-  function loadTheme() {
-    const savedTheme = localStorage.getItem("theme");
-    const isDark = savedTheme === "dark" || 
-      (savedTheme !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    
-    if (isDark) {
-      htmlElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      htmlElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-    updateCheckboxes(isDark);
-  }
-
   function updateCheckboxes(isDark) {
     if (themeCheckbox) themeCheckbox.checked = isDark;
     if (mobileThemeCheckbox) mobileThemeCheckbox.checked = isDark;
@@ -37,6 +22,11 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("theme", "light");
     }
     
+    updateCheckboxes(isDark);
+  }
+
+  function initializeTheme() {
+    const isDark = htmlElement.classList.contains("dark");
     updateCheckboxes(isDark);
   }
 
@@ -57,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+  
   if (themeCheckbox) {
     themeCheckbox.addEventListener("change", function() {
       if (this.checked !== htmlElement.classList.contains("dark")) {
@@ -73,5 +64,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  loadTheme();
+  initializeTheme();
 });

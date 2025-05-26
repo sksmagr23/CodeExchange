@@ -1,5 +1,5 @@
 :root {
-  --primary-dark: #9ef01a;
+  --primary-dark: #65def1;
   --bg-dark: #121212;
   --bg-dark-secondary: #1e1e1e;
   --text-dark: #e0e0e0;
@@ -71,7 +71,7 @@
 
 .dark .nav-link:hover,
 .dark {
-  background-color: rgba(158, 240, 26, 0.321) !important;
+  background-color: rgba(101, 222, 241, 0.321) !important;
 }
 
 .switch {
@@ -123,7 +123,7 @@ input:checked + .slider {
 input:checked + .slider:before {
   left: calc(100% - (var(--size-of-icon,1.4em) + var(--slider-offset,0.3em)));
   background: #27282c;
-  box-shadow: inset -3px -2px 5px -2px #45ff51, inset -10px -4px 0 0 #44f100;
+  box-shadow: inset -3px -2px 5px -2px #45d2f1, inset -10px -4px 0 0 #65def1;
 }
 
 .dark main div.bg-white {
@@ -261,7 +261,7 @@ input:checked + .slider:before {
 }
 
 .dark .hover\:bg-gray-200:hover {
-  background-color: #b5e422 !important;
+  background-color: #65def1 !important;
 }
 
 .dark .bg-gradient-to-br.from-\[\#0466C8\].to-\[\#0353A4\] {
@@ -307,5 +307,31 @@ input:checked + .slider:before {
 }
 
 .dark .text-\[\#0466C8\].hover\:text-\[\#0353A4\]:hover {
-  color: #c8ff00 !important;
+  color: #59f5ff !important;
+}
+
+.dark .bg-blue-100.text-\[\#0466C8\] {
+  background-color: #1a2735 !important;
+  color: var(--primary-dark) !important;
+}
+
+.dark .edit-answer-text,
+.dark #editQuestionText {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  color: var(--text-dark) !important;
+}
+
+.dark .bg-gray-200.text-gray-700 {
+  background-color: #2d2d2d !important;
+  color: #d0d0d0 !important;
+}
+
+.dark .bg-gray-200.text-gray-700:hover {
+  background-color: #3d3d3d !important;
+}
+
+.dark .answer-edit-form.bg-gray-50,
+.dark #questionEditForm.bg-gray-50 {
+  background-color: #1f1f1f !important;
 }

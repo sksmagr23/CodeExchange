@@ -8,7 +8,9 @@ const {
   createAnswer,
   getAnswersByQuestionId,
   deleteQuestion,
-  deleteAnswer
+  deleteAnswer,
+  updateQuestion,
+  updateAnswer
 } = require('../controllers/questionController');
 const authMiddleware = require('../middleware/authMiddleware');
 
@@ -16,9 +18,15 @@ const router = express.Router();
 
 router.route('/').get(renderQuestionsPage).post(authMiddleware, createQuestion);
 router.route('/ask').get(authMiddleware, renderAskQuestionPage)
-router.route('/:id').get(renderQuestionPage).delete(authMiddleware, deleteQuestion);
+router.route('/:id')
+  .get(renderQuestionPage)
+  .put(authMiddleware, updateQuestion)
+  .delete(authMiddleware, deleteQuestion);
+  
 router.route('/:id/answers').get(getAnswersByQuestionId).post(authMiddleware, createAnswer);
-router.route('/:id/answers/:answerId').delete(authMiddleware, deleteAnswer);
+router.route('/:id/answers/:answerId')
+  .put(authMiddleware, updateAnswer)
+  .delete(authMiddleware, deleteAnswer);
 
 module.exports = router;
 
