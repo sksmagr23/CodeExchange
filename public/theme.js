@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function toggleTheme() {
     const isDark = !htmlElement.classList.contains("dark");
-    
     if (isDark) {
       htmlElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
       htmlElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
-    
     updateCheckboxes(isDark);
   }
 
@@ -63,6 +61,5 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
   initializeTheme();
 });

@@ -7,7 +7,7 @@ A simplified web application that replicates core functionalities of Stack Overf
 - User authentication with Google and Email/password
 - Question and answer management
 - Basic user profiles with personal asked questions and answer given
-- User can ask questions, answer others questions, delete their own questions and answers
+- User can ask questions, answer others questions, delete their own questions and answers and edit their responses(CRUD)
 - List all questions and view details of each question
 - ```Stack Overflow API integration``` - search and display questions and answers from Stack Overflow
 - Tailwind CSS for styling
@@ -44,5 +44,5 @@ A simplified web application that replicates core functionalities of Stack Overf
 1. *Start the server*:
    ```bash
    npm run dev
-   // The server should now be running at 'http://localhost:3000'
+   # The server should now be running at 'http://localhost:3000'
    ```         

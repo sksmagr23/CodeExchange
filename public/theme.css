@@ -335,3 +335,45 @@ input:checked + .slider:before {
 .dark #questionEditForm.bg-gray-50 {
   background-color: #1f1f1f !important;
 }
+.dark .markdown-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.dark .markdown-content code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 640px) {
+  .dark .edit-answer-text,
+  .dark #editQuestionText {
+    font-size: 14px;
+  }
+  
+  .dark button.text-xs {
+    background-color: var(--primary-dark) !important;
+    color: black !important;
+  }
+  
+  .dark .bg-red-100.text-red-600.text-xs {
+    background-color: #2a1010 !important;
+    color: #ff9e9e !important;
+  }
+  
+  .dark .bg-blue-50 {
+    background-color: #1a1a1a !important;
+  }
+}
+
+.dark .flex-wrap.gap-2 button {
+  margin-bottom: 0.25rem;
+}
+@media (max-width: 640px) {
+  .dark .bg-blue-100.text-xs {
+    background-color: #1a2735 !important;
+    color: var(--primary-dark) !important;
+    display: inline-block;
+    margin-bottom: 0.25rem;
+  }
+}

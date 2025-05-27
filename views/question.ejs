@@ -168,52 +168,53 @@
             <% if (question.tags && question.tags.length > 0) { %>
             <div class="mb-4">
               <div class="flex flex-wrap gap-2">
-                <span class="text-gray-600 font-medium mb-2 block">Tags:</span>
-                <% question.tags.forEach(tag => { %>
-                <a
-                  href="/questions?tag=<%= tag %>"
-                  class="px-3 py-1 text-sm bg-blue-100 text-[#0466C8] rounded-full hover:bg-blue-200 transition-colors"
-                >
-                  <%= tag %>
-                </a>
-                <% }) %>
+                <span class="text-gray-600 font-medium mb-2 block md:inline md:mb-0">Tags:</span>
+                <div class="flex flex-wrap gap-2">
+                  <% question.tags.forEach(tag => { %>
+                  <a
+                    href="/questions?tag=<%= tag %>"
+                    class="px-2 py-1 text-xs sm:text-sm bg-blue-100 text-[#0466C8] rounded-full hover:bg-blue-200 transition-colors"
+                  >
+                    <%= tag %>
+                  </a>
+                  <% }) %>
+                </div>
               </div>
             </div>
             <% } %>
 
-            <div id="questionContent" class="bg-gray-50 p-4 rounded-lg mb-4">
-              <div class="text-gray-800 markdown-content">
+            <div id="questionContent" class="bg-gray-50 p-3 sm:p-4 rounded-lg mb-4">
+              <div class="text-gray-800 markdown-content overflow-x-auto">
                 <%- markdownDescription %>
               </div>
             </div>
 
-            <div id="questionEditForm" class="bg-gray-50 p-4 rounded-lg mb-4 hidden">
+            <div id="questionEditForm" class="bg-gray-50 p-3 sm:p-4 rounded-lg mb-4 hidden">
               <form id="editQuestionForm">
                 <textarea
                   id="editQuestionText"
-                  class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8] shadow-sm outline-none"
+                  class="block w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8] shadow-sm outline-none text-sm sm:text-base"
                   rows="8"
                 ><%= question.description %></textarea>
-                <div class="mt-3 flex space-x-3">
+                <div class="mt-3 flex flex-wrap gap-2 sm:flex-nowrap sm:space-x-3">
                   <button
                     type="submit"
-                    class="px-4 py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition text-sm"
+                    class="flex-1 sm:flex-none px-3 py-1.5 sm:px-4 sm:py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition text-xs sm:text-sm"
                   >
                     <i class="fas fa-save mr-1"></i> Save
                   </button>
                   <button
                     type="button"
                     onclick="toggleQuestionEdit(false)"
-                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition text-sm"
+                    class="flex-1 sm:flex-none px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition text-xs sm:text-sm"
                   >
                     <i class="fas fa-times mr-1"></i> Cancel
                   </button>
                 </div>
               </form>
             </div>
-
-            <div class="flex justify-between items-center">
-              <div class="flex items-center text-sm text-gray-500">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div class="flex items-center text-xs sm:text-sm text-gray-500">
                 <div class="flex items-center">
                   <i class="fas fa-user-circle mr-1"></i>
                   <span class="font-medium"><%= question.user.username %></span>
@@ -226,10 +227,10 @@
               </div>
               
               <% if (user && question.user._id.toString() === user._id.toString()) { %>
-              <div class="flex space-x-2">
+              <div class="flex space-x-2 w-full sm:w-auto">
                 <button
                   onclick="toggleQuestionEdit(true)"
-                  class="flex items-center justify-center px-3 py-1.5 bg-blue-100 text-[#0466C8] rounded-md hover:bg-blue-200 transition text-sm"
+                  class="flex items-center justify-center px-3 py-1.5 bg-blue-100 text-[#0466C8] rounded-md hover:bg-blue-200 transition text-xs sm:text-sm w-full sm:w-auto"
                   id="editQuestionBtn"
                 >
                   <i class="fas fa-edit mr-1"></i> Edit
@@ -250,38 +251,37 @@
 
           <div class="divide-y divide-gray-100">
             <% if (answers.length === 0) { %>
-            <div class="p-8 text-center">
+            <div class="p-4 sm:p-8 text-center">
               <div class="text-gray-400 mb-3">
-                <i class="fas fa-comments text-4xl"></i>
+                <i class="fas fa-comments text-3xl sm:text-4xl"></i>
               </div>
-              <p class="text-gray-600">
+              <p class="text-gray-600 text-sm sm:text-base">
                 No answers yet. Be the first to answer this question!
               </p>
             </div>
             <% } else { %> <% answers.forEach(answer => { %>
-            <div class="p-5 hover:bg-gray-50" id="answer-<%= answer._id %>">
-              <!-- Normal answer view -->
-              <div class="answer-content bg-gray-50 p-4 rounded-lg mb-3">
-                <p><%= answer.text %></p>
+            <div class="p-3 sm:p-5 hover:bg-gray-50" id="answer-<%= answer._id %>">
+              <div class="answer-content bg-gray-50 p-3 sm:p-4 rounded-lg mb-3">
+                <p class="text-sm sm:text-base overflow-x-auto"><%= answer.text %></p>
               </div>
 
-              <div class="answer-edit-form bg-gray-50 p-4 rounded-lg mb-3 hidden">
+              <div class="answer-edit-form bg-gray-50 p-3 sm:p-4 rounded-lg mb-3 hidden">
                 <form class="edit-answer-form" data-answer-id="<%= answer._id %>">
                   <textarea
-                    class="edit-answer-text block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8] shadow-sm outline-none"
+                    class="edit-answer-text block w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8] shadow-sm outline-none text-sm sm:text-base"
                     rows="5"
                   ><%= answer.text %></textarea>
-                  <div class="mt-3 flex space-x-3">
+                  <div class="mt-3 flex flex-wrap gap-2 sm:flex-nowrap sm:space-x-3">
                     <button
                       type="submit"
-                      class="px-4 py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition text-sm"
+                      class="flex-1 sm:flex-none px-3 py-1.5 sm:px-4 sm:py-2 bg-[#0466C8] text-white rounded-lg hover:bg-[#0353A4] transition text-xs sm:text-sm"
                     >
                       <i class="fas fa-save mr-1"></i> Save
                     </button>
                     <button
                       type="button"
                       onclick="toggleAnswerEdit('<%= answer._id %>', false)"
-                      class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition text-sm"
+                      class="flex-1 sm:flex-none px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition text-xs sm:text-sm"
                     >
                       <i class="fas fa-times mr-1"></i> Cancel
                     </button>
@@ -289,8 +289,8 @@
                 </form>
               </div>
 
-              <div class="flex justify-between items-center">
-                <div class="flex items-center text-sm text-gray-500">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div class="flex items-center text-xs sm:text-sm text-gray-500">
                   <div class="flex items-center">
                     <i class="fas fa-user-circle mr-1"></i>
                     <span class="font-medium"><%= answer.user.username %></span>
@@ -302,16 +302,16 @@
                   </div>
                 </div>
                 <% if (user && answer.user._id.toString() === user._id.toString()) { %>
-                <div class="flex space-x-2">
+                <div class="flex flex-wrap gap-2 w-full sm:w-auto sm:space-x-2">
                   <button
                     onclick="toggleAnswerEdit('<%= answer._id %>', true)"
-                    class="flex items-center justify-center px-3 py-1.5 bg-blue-100 text-[#0466C8] rounded-md hover:bg-blue-200 transition text-sm"
+                    class="flex-1 sm:flex-none flex items-center justify-center px-3 py-1.5 bg-blue-100 text-[#0466C8] rounded-md hover:bg-blue-200 transition text-xs sm:text-sm"
                   >
                     <i class="fas fa-edit mr-1"></i> Edit
                   </button>
                   <button
                     onclick="deleteAnswer('<%= question._id %>', '<%= answer._id %>')"
-                    class="flex items-center justify-center px-3 py-1.5 bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition text-sm"
+                    class="flex-1 sm:flex-none flex items-center justify-center px-3 py-1.5 bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition text-xs sm:text-sm"
                   >
                     <i class="fas fa-trash-alt mr-1"></i> Delete
                   </button>
@@ -331,27 +331,27 @@
             </h3>
           </div>
 
-          <div class="p-6 bg-[#0279f0]">
+          <div class="p-4 sm:p-6 bg-[#0279f0]">
             <% if (user) { %>
             <form
               action="/questions/<%= question._id %>/answers"
               method="POST"
-              class="space-y-4"
+              class="space-y-3 sm:space-y-4"
             >
               <div>
                 <textarea
                   name="text"
                   id="text"
                   rows="5"
-                  class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8] shadow-sm outline-none"
+                  class="block w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0466C8] focus:border-[#0466C8] shadow-sm outline-none text-sm sm:text-base"
                   placeholder="Share your solution or suggest an approach..."
                   required
                 ></textarea>
               </div>
-              <div class="pt-2">
+              <div class="pt-1 sm:pt-2">
                 <button
                   type="submit"
-                  class="inline-flex items-center px-6 py-2.5 border border-transparent rounded-lg shadow-sm text-base font-medium bg-white text-[#0466C8] hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0466C8] transition"
+                  class="inline-flex items-center px-4 py-2 sm:px-6 sm:py-2.5 border border-transparent rounded-lg shadow-sm text-sm sm:text-base font-medium bg-white text-[#0466C8] hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0466C8] transition w-full sm:w-auto"
                 >
                   <i class="fas fa-paper-plane mr-2"></i>
                   Post Answer
@@ -359,13 +359,13 @@
               </div>
             </form>
             <% } else { %>
-            <div class="bg-blue-50 border-l-4 border-[#0466C8] p-4 rounded">
+            <div class="bg-blue-50 border-l-4 border-[#0466C8] p-3 sm:p-4 rounded">
               <div class="flex">
                 <div class="flex-shrink-0">
                   <i class="fas fa-info-circle text-[#0466C8]"></i>
                 </div>
                 <div class="ml-3">
-                  <p class="text-sm text-gray-700">
+                  <p class="text-xs sm:text-sm text-gray-700">
                     You need to be logged in to answer this question.
                     <a
                       href="/login"
