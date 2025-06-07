@@ -1,5 +1,5 @@
 :root {
-  --primary-dark: #65def1;
+  --primary-dark: #168bff;
   --bg-dark: #121212;
   --bg-dark-secondary: #1e1e1e;
   --text-dark: #e0e0e0;
@@ -71,7 +71,7 @@
 
 .dark .nav-link:hover,
 .dark {
-  background-color: rgba(101, 222, 241, 0.321) !important;
+  background-color: rgba(101, 148, 241, 0.321) !important;
 }
 
 .switch {
@@ -98,7 +98,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #a3cdf5;
+  background-color: #97cdff;
   transition: .4s;
   border-radius: 30px;
 }
@@ -112,7 +112,7 @@
   left: var(--slider-offset,0.3em);
   top: 50%;
   transform: translateY(-50%);
-  background: linear-gradient(80deg,#ffce2c,#ff8d01 80%);
+  background: linear-gradient(80deg,#0095ff,#0276d4 80%);
   transition: .4s;
 }
 
@@ -123,7 +123,7 @@ input:checked + .slider {
 input:checked + .slider:before {
   left: calc(100% - (var(--size-of-icon,1.4em) + var(--slider-offset,0.3em)));
   background: #27282c;
-  box-shadow: inset -3px -2px 5px -2px #45d2f1, inset -10px -4px 0 0 #65def1;
+  box-shadow: inset -3px -2px 5px -2px #006ef4, inset -10px -4px 0 0 #00b5fd;
 }
 
 .dark main div.bg-white {
@@ -261,7 +261,7 @@ input:checked + .slider:before {
 }
 
 .dark .hover\:bg-gray-200:hover {
-  background-color: #65def1 !important;
+  background-color: #02aff9 !important;
 }
 
 .dark .bg-gradient-to-br.from-\[\#0466C8\].to-\[\#0353A4\] {
@@ -345,35 +345,84 @@ input:checked + .slider:before {
   word-break: break-word;
 }
 
-@media (max-width: 640px) {
-  .dark .edit-answer-text,
-  .dark #editQuestionText {
-    font-size: 14px;
-  }
-  
-  .dark button.text-xs {
-    background-color: var(--primary-dark) !important;
-    color: black !important;
-  }
-  
-  .dark .bg-red-100.text-red-600.text-xs {
-    background-color: #2a1010 !important;
-    color: #ff9e9e !important;
-  }
-  
-  .dark .bg-blue-50 {
-    background-color: #1a1a1a !important;
-  }
+.dark select {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  color: var(--text-dark) !important;
+}
+
+.dark select option {
+  background-color: #1e1e1e !important;
+  color: var(--text-dark) !important;
+}
+
+.dark .text-gray-700 {
+  color: #b0b0b0 !important;
+}
+
+.dark button[type="submit"] {
+  background-color: #1a2735 !important;
+  color: var(--primary-dark) !important;
+}
+
+.dark button[type="submit"]:hover {
+  background-color: #223242 !important;
+}
+
+.dark .bg-blue-100.text-\[\#0466C8\].rounded-full {
+  background-color: #1a2735 !important;
+  color: var(--primary-dark) !important;
+}
+
+.dark .text-gray-500.hover\:text-gray-700 {
+  color: #999 !important;
+}
+
+.dark .text-gray-500.hover\:text-gray-700:hover {
+  color: #ccc !important;
 }
 
 .dark .flex-wrap.gap-2 button {
   margin-bottom: 0.25rem;
 }
+
+.dark .bg-[#0466C8\/10],
+.dark .hover\:bg-\[#0466C8\/10\]:hover {
+  background-color: rgba(22, 139, 255, 0.15) !important;
+}
+
+.dark .text-[#0466C8] {
+  color: var(--primary-dark) !important;
+}
+.dark .bg-gray-100.text-gray-600 {
+  background-color: #1f1f1f !important;
+  color: #999 !important;
+}
+
+.dark button[id^="like-btn-"]:hover {
+  background-color: rgba(22, 139, 255, 0.2) !important;
+}
+
+.dark .fa-thumbs-up {
+  color: inherit;
+}
+
+.dark .fas.fa-thumbs-up {
+  color: var(--primary-dark) !important;
+}
+
+.dark .text-[#0466C8] .fa-thumbs-up {
+  color: var(--primary-dark) !important;
+}
+
 @media (max-width: 640px) {
-  .dark .bg-blue-100.text-xs {
-    background-color: #1a2735 !important;
-    color: var(--primary-dark) !important;
-    display: inline-block;
-    margin-bottom: 0.25rem;
+  .dark button[id^="like-btn-"] {
+    background-color: rgba(22, 139, 255, 0.15) !important;
+    display: inline-flex !important;
+    align-items: center;
+  }
+  
+  .dark button[id^="like-btn-"].bg-gray-100 {
+    background-color: #1f1f1f !important;
   }
 }

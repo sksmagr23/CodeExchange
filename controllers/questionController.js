@@ -41,8 +41,26 @@ exports.getQuestions = async (req, res) => {
 };
 
 exports.renderQuestionsPage = async (req, res) => {
-  const questions = await Question.find().populate('user', 'username');
-  res.render('questions', { title: 'Questions', questions, user: req.user });
+  try {
+    const { tag } = req.query;
+    let query = {};
+    if (tag) {
+      query = { tags: tag };
+    }
+    
+    const questions = await Question.find(query).populate('user', 'username');
+    const allTags = await Question.distinct('tags');
+    
+    res.render('questions', { 
+      title: 'Questions', 
+      questions, 
+      user: req.user,
+      currentTag: tag || '',
+      allTags
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching questions' });
+  }
 };
 
 exports.renderAskQuestionPage = (req, res) => {
@@ -60,9 +78,11 @@ exports.getQuestionById = async (req, res) => {
 
 exports.renderQuestionPage = async (req, res) => {
   const question = await Question.findById(req.params.id).populate('user', 'username');
-  const answers = await Answer.find({ question: req.params.id }).populate('user', 'username')
+  const answers = await Answer.find({ question: req.params.id })
+    .populate('user', 'username')
+    .populate('likes');
+    
   if (question) {
-    // Convert markdown to HTML
     const markdownDescription = marked(question.description);
     res.render('question', { 
       title: 'Question', 
@@ -190,5 +210,33 @@ exports.updateAnswer = async (req, res) => {
   } catch (error) {
     console.error('Error updating answer:', error);
     res.status(500).json({ message: 'Error updating answer' });
+  }
+};
+
+exports.likeAnswer = async (req, res) => {
+  try {
+    const answer = await Answer.findById(req.params.answerId);
+    
+    if (!answer) {
+      return res.status(404).json({ message: 'Answer not found' });
+    }
+    
+    const alreadyLiked = answer.likes && answer.likes.some(id => id.toString() === req.user._id.toString());
+    
+    if (alreadyLiked) {
+      await Answer.findByIdAndUpdate(
+        req.params.answerId,
+        { $pull: { likes: req.user._id } }
+      );
+      return res.json({ liked: false, likesCount: answer.likes.length - 1 });
+    } else {
+      await Answer.findByIdAndUpdate(
+        req.params.answerId,
+        { $push: { likes: req.user._id } }
+      );
+      return res.json({ liked: true, likesCount: (answer.likes ? answer.likes.length : 0) + 1 });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error processing like' });
   }
 };

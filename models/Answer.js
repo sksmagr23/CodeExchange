@@ -15,6 +15,10 @@ const answerSchema = mongoose.Schema({
     ref: 'Question',
     required: true,
   },
+  likes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
   createdAt: {
     type: Date,
     default: Date.now,

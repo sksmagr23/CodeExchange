@@ -13,7 +13,7 @@ exports.getUserProfile = async (req, res) => {
         path: 'answers',
         select: 'text createdAt',
         populate: {
-          path: 'question',
+          path: 'question likes',
           select: 'title'
         }
       });

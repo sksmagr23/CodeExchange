@@ -10,7 +10,8 @@ const {
   deleteQuestion,
   deleteAnswer,
   updateQuestion,
-  updateAnswer
+  updateAnswer,
+  likeAnswer
 } = require('../controllers/questionController');
 const authMiddleware = require('../middleware/authMiddleware');
 
@@ -27,6 +28,8 @@ router.route('/:id/answers').get(getAnswersByQuestionId).post(authMiddleware, cr
 router.route('/:id/answers/:answerId')
   .put(authMiddleware, updateAnswer)
   .delete(authMiddleware, deleteAnswer);
+router.route('/:id/answers/:answerId/like')
+  .post(authMiddleware, likeAnswer);
 
 module.exports = router;
 
